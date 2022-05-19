@@ -2,7 +2,7 @@
 
 ShinsImageScanClass is an AutoHotKey class designed for user freindliness and performance in mind, capable of searching for images and pixels extremely fast and also with background window support it's versatile and lightweight, with no additional dependancies. It also supports 32 and 64 bit.
 
-## Youtube simple overviee and examples
+# Youtube simple overview and examples
 
 [![Video](https://img.youtube.com/vi/wIdcF6KUHIE/default.jpg)](https://www.youtube.com/watch?v=wIdcF6KUHIE)
 
