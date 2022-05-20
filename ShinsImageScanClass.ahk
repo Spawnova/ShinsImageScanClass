@@ -59,19 +59,8 @@ class ShinsImageScanClass {
 		this.dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
 		this.tBufferPtr := tBufferPtr := this.SetVarCapacity("ttBuffer",4096,0)
 		this.dataPtr := dataPtr := this.SetVarCapacity("_data",64,0)
-		varsetcapacity(_scan,8)
-		VarSetCapacity(bi,40,0)
-		NumPut(gw,bi,4,"int")
-		NumPut(-gh,bi,8,"int")
-		NumPut(40,bi,0,"uint")
-		NumPut(1,bi,12,"ushort")
-		NumPut(32,bi,14,"ushort")
-		this.hbm := DllCall("CreateDIBSection", "Ptr", this.dstDC, "Ptr", &bi, "uint", 0, "Ptr*", _scan, "Ptr", 0, "uint", 0, "Ptr")
-		this.temp0 := _scan
-		numput(_scan,dataPtr+0,0,"Ptr")
 		numput(tBufferPtr,dataPtr+0,(this.bits ? 8 : 4),"Ptr")
-		numput((gh<<16)+gw,dataPtr+0,(this.bits ? 16 : 8),"uint")
-		DllCall("SelectObject", "Ptr", this.dstDC, "Ptr", this.hbm)
+		this.CreateDIB()
 	}
 	
 	
@@ -331,6 +320,36 @@ class ShinsImageScanClass {
 	;  internal functions used by the class
 	;########################################## 
 	
+	CheckWindow() {
+		if (this.desktop)
+			return 1
+		dllcall("GetClientRect","Ptr",this.hwnd,"Ptr",this.tBufferPtr)
+    	w := numget(this.tBufferPtr+0,8) - numget(this.tBufferPtr+0,0)
+    	h := numget(this.tBufferPtr+0,12) - numget(this.tBufferPtr+0,4)
+		if (w = 0 or h = 0)
+			return 0
+		if (w != this.width or h != this.height) {
+			this.width := w
+			this.height := h
+			DllCall("DeleteObject","Ptr",this.hbm)
+			this.CreateDIB()
+		}
+		return 1
+	}
+	CreateDIB() {
+		varsetcapacity(_scan,8)
+		VarSetCapacity(bi,40,0)
+		NumPut(this.width,bi,4,"int")
+		NumPut(-this.height,bi,8,"int")
+		NumPut(40,bi,0,"uint")
+		NumPut(1,bi,12,"ushort")
+		NumPut(32,bi,14,"ushort")
+		this.hbm := DllCall("CreateDIBSection", "Ptr", this.dstDC, "Ptr", &bi, "uint", 0, "Ptr*", _scan, "Ptr", 0, "uint", 0, "Ptr")
+		this.temp0 := _scan
+		numput(_scan,this.dataPtr,0,"Ptr")
+		numput((this.height<<16)+this.width,this.dataPtr,(this.bits ? 16 : 8),"uint")
+		DllCall("SelectObject", "Ptr", this.dstDC, "Ptr", this.hbm)
+	}
 	SetVarCapacity(key,size,fill=0) {
 		this.SetCapacity(key,size)
 		DllCall("RtlFillMemory","Ptr",this.GetAddress(key),"Ptr",size,"uchar",fill) ; Zero fill memory
@@ -381,7 +400,8 @@ class ShinsImageScanClass {
 		return 1
 	}
 	Update() {
-		DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020)
+		if (this.CheckWindow())
+			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020)
 	}
 	GetClientSize(ByRef w, ByRef h) {
 		if (this.desktop) {  ;only gets primary screen for now, I may add support for virtual later
