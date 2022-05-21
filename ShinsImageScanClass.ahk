@@ -324,8 +324,8 @@ class ShinsImageScanClass {
 		if (this.desktop)
 			return 1
 		dllcall("GetClientRect","Ptr",this.hwnd,"Ptr",this.tBufferPtr)
-    	w := numget(this.tBufferPtr+0,8) - numget(this.tBufferPtr+0,0)
-    	h := numget(this.tBufferPtr+0,12) - numget(this.tBufferPtr+0,4)
+    	w := numget(this.tBufferPtr+0,8)
+    	h := numget(this.tBufferPtr+0,12)
 		if (w = 0 or h = 0)
 			return 0
 		if (w != this.width or h != this.height) {
@@ -352,7 +352,7 @@ class ShinsImageScanClass {
 	}
 	SetVarCapacity(key,size,fill=0) {
 		this.SetCapacity(key,size)
-		DllCall("RtlFillMemory","Ptr",this.GetAddress(key),"Ptr",size,"uchar",fill) ; Zero fill memory
+		DllCall("RtlFillMemory","Ptr",this.GetAddress(key),"Ptr",size,"uchar",fill)
 		return this.GetAddress(key)
 	}
 	_Delete() {
