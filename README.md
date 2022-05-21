@@ -7,7 +7,8 @@ ShinsImageScanClass is an AutoHotKey class designed for user freindliness and pe
 [![Video](https://img.youtube.com/vi/wIdcF6KUHIE/default.jpg)](https://www.youtube.com/watch?v=wIdcF6KUHIE)
 
 # Functions
-    ```ahk
+
+    ```AutoHotkey
     ;Image....................Find an image; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
     Image(image, variance=0, ByRef returnX=0, ByRef returnY=0)
 
