@@ -45,7 +45,7 @@ class ShinsImageScanClass {
 		this._ScanPixelRegion := this.mcode("VVdWU4PsHIt0JDiLXCQ4i2wkPItUJDSLRCRIA1wkQANsJESF9g+IhgEAAItMJDyFyQ+IegEAAIt0JDAPt3YIjU7/Od6JdCQQD07Zi0wkMA+3SQqNcf856Q9O7oTAD4TdAAAAO2wkPA+OwwAAAInHidCLdCQQiWwkGMHoEA+vdCQ8D7bAiQQkD7bGiUQkBIn4D7bAiXQkFIlEJAgPtsKJRCQMO1wkOH5ki0QkMIt0JBSLAI0ssIt0JDiLVLUAidHB+RAPtskrDCSJyMH4HzHBKcEPtsYrRCQED7bSicfB/x8x+Cn4OcEPTMgrVCQMidfB/x8x+in6OdEPTdE7VCQID46bAAAAg8YBOfN1rYt0JBCDRCQ8AQF0JBSLRCQYO0QkPA+Fe////4n2jbwnAAAAALj/////60yJ9o28JwAAAAA7bCQ8fuqLdCQQi3wkPMHmAg+v/jtcJDh+NotEJDiJBCSLRCQwiwiLBCQB+esJZpCDwAE5w3QZORSBdfTB4BADRCQ8g8QcW15fXcOQjXQmAINEJDwBAfc7bCQ8dbfrkZCLRCQ8weYQg8QcWwHwXl9dw7j9////68uQkJCQkJCQkA==|QVdBVkFVQVRVV1ZTSIPsGIuEJJAAAABEi5wkgAAAAIu8JIgAAABED7bgRQHDRAHPRYXAD4hhAQAARYXJD4hYAQAAD7dpEESNVf9EOd1FD07aRA+3URJBjVr/QTn6D077hMAPhMgAAABEOc8PjrcAAABEichBidUPtvKJfCQID6/FQcHtEIlsJAyJ9UUPtu2JRCQED7bGicdFOcN+b0hjRCQESIsRSWPYTI08gkGLFJ9Bid6J0MH4EA+2wEQp6EGJwkHB+h9EMdBEKdBBicIPtsYPttIp+InGwf4fMfAp8EE5wkEPTcIp6kGJ0kHB+h9EMdJEKdI50A9MwkQ54A+OjQAAAEiDwwFBOdt/oIt0JAxBg8EBAXQkBEQ5TCQID4V1////Dx9EAAC4/////+s5kEQ5z37zRInOD6/1RTnDfkBIixlIY8ZNY9BIjRyD6wqQSYPCAUU5034nRInQQjkUk3XuweAQRAHISIPEGFteX11BXEFdQV5BX8MPH4AAAAAAQYPBAQHuRDnPdbDrmw8fAEHB5hBDjQQO6864/f///+vHkJCQkJCQkJCQkJCQkJCQ")
 		this._ScanPixelCount := this.mcode("VVdWU4PsJIt0JDiLVCRAi0wkPA+3XggPt3YKiVwkEIl0JBiE0g+E5QAAAIX2D4REAQAAD7bCicqNNJ0AAAAAx0QkHAAAAACJRCQIweoQD7bBiXQkIA+28sdEJBQAAAAAiUQkDIl0JAQPtvWJNCQx9otMJBCFyXRyi0QkOItcJByLTCQgiwCNFJ0AAAAAjSwIjRwQAdWNdgCLEw+2zisMJInQD7bSic/B+BDB/x8PtsArRCQEMfkp+YnHwf8fMfgp+DnBD0zIK1QkDInXwf8fMfop+jnRD03RMcA7VCQID57Ag8MEAcY53XWug0QkFAGLTCQQi0QkFAFMJBw5RCQYD4Vr////g8QkifBbXl9dw5CLVCQYhdJ0X4nYMe0x/zH2weACiQQkjXYAjbwnAAAAAItEJBCFwHQoi0QkOI0crQAAAACLEI0EGgMUJAHTjXYAMdI7CA+UwoPABAHWOdh18IPHAQNsJBA5fCQYdcODxCSJ8FteX13Dg8QkMfZbifBeX13DkJCQkJCQkJCQkJCQkA==|QVdBVkFVQVRVV1ZTSIPsGA+3QRJED7dhEIlEJARJic1BD7bwRYTAD4TjAAAAhcAPhOwBAABBjUQk/4nXD7buRTH/SIlEJAjB7xBFMfZFMdtAD7b/D7bKZg8fhAAAAAAARYXkdHxJi1UASWPHTI0MgkgDRCQISI1cggRmDx9EAABBixEPtsYp6EGJwEHB+B9EMcBEKcBBicCJ0A+20sH4EA+2wCn4QYnCQcH6H0Qx0EQp0EE5wEEPTcApykGJ0EHB+B9EMcJEKcI50A9MwjnwD57ASYPBBA+2wEEBw0w5y3WfQYPGAUUB50Q5dCQED4Vt////RInYSIPEGFteX11BXEFdQV5BX8NmDx+EAAAAAACJx4XAD4QHAQAARInjRYniZg9u2jHJwesCQY10JP9Bg+L8RTHJSMHjBEUx22YPcNMADx+AAAAAAEWF5A+EtwAAAE2LRQCD/gMPhr8AAABIY8FmD+/JSY0EgEiNLAMPHwDzD28ASIPAEGYPdsJmD/rISDnodetmD2/BZg9z2AhmD/7IZg9vwWYPc9gEZg/+yGYPfshBAcNEidBFOeJ0Wo0sAUhj7UE5FKh1BEGDwwGNaAFBOex+QgHNSGPtQTsUqHUEQYPDAY1oAkE57H4rAc1IY+1BOxSodQRBg8MBg8ADRDngfRQByEiYQTkUgHUKQYPDAWYPH0QAAEGDwQFEAeFEOc8PhTD////p1v7//zHA641FMdvpyv7//5CQkJCQkJA=")
 		this._ScanPixelCountRegion := this.mcode("VVdWU4PsKIt0JESLXCREi2wkSItEJECLVCRUA1wkTANsJFCF9g+IwAEAAItMJEiFyQ+ItAEAAIt0JDwPt3YIOd6NTv+JdCQYD0/Li1wkPIlMJBAPt0sKjVn/OekPT92JXCQUhNIPhPUAAAA7XCRID45qAQAAD690JEiLTCQQideJwsHqEIn7D7bbiXQkHIt0JESJXCQIweYCiXQkII00jQAAAACJdCQkD7byiXQkBA+29A+2wIlEJAyJNCQx9maQi0QkEDtEJER+cItEJDyLXCQgiyiLRCQcweACAcMB6wNsJCQBxY12AIsTD7bOKwwkidAPttKJz8H4EMH/Hw+2wCtEJAQx+Sn5icfB/x8x+Cn4OcEPTMgrVCQMidfB/x8x+in6OdEPTdExwDtUJAgPnsCDwwQBxjndda6LXCQYg0QkSAEBXCQci0QkFDtEJEgPhWv///+DxCiJ8FteX13DkDtcJEh+eYt0JESLfCQYD698JEiLbCRIweYCiXQkBIt0JBDB5gKJNCQx9o22AAAAAItcJBA7XCREfi6LXCQ8i1QkBIsLjRy9AAAAAAHaAcoDDCQBy410JgAxyTsCD5TBg8IEAc452nXwg8UBA3wkGDlsJBR1u4PEKInwW15fXcODxCgx9luJ8F5fXcO+/f///+lg////kJCQkJCQkJCQkJA=|QVdBVkFVQVRVV1ZTSIPsKIuEJKAAAABEi7QkkAAAAIucJJgAAAAPtvBEiYQkgAAAAEmJzUUBxkQBy0WFwA+IjgIAAEWFyQ+IhQIAAA+3eRCNT/9EOfeJfCQERA9O8UEPt00SRI1B/znZRA9Pw0SJBCSEwA+FZwEAAEQ5DCQPjkYCAABBifhEifcrvCSAAAAAi5wkgAAAAIn4jXf/Zg9u2kGJ/8HoAkGD5/yJdCQIZg9w0wBIweAERQ+vwUQB+4P+A0iJRCQQSGOEJIAAAAAPRpwkgAAAAEUx5EiJRCQYRI1bAY1zAo1rAw8fhAAAAAAARDu0JIAAAAAPjroAAACDfCQIA02LVQB2WkiLTCQQSWPASANEJBhmD+/JSY0EgkgBwQ8fgAAAAADzD28ASIPAEGYPdsJmD/rISDnIdetmD2/BZg9z2AhmD/7IZg9vwWYPc9gEZg/+yGYPfshBAcREOf90VUGNBBhImEE5FIJ1BEGDxAFFOd5+QEONBBhImEE7FIJ1BEGDxAFBOfZ+K0GNBDBImEE7FIJ1BEGDxAFEOfV9FkKNRAUASJhBORSCdQlBg8QBDx9EAABBg8EBRANEJAREOQwkD4Ul////RIngSIPEKFteX11BXEFdQV5BX8OQRTnID47gAAAAi4QkgAAAAA+27kUx5A+2ykEPr/lIY5wkgAAAAPfQRAHwSIlcJAhIAdhBif+J10iJRCQQwe8QQA+2/w8fRAAARDu0JIAAAAB+f0iLXCQISYtVAEljx0yNBBhIA0QkEE6NFIJIjVyCBEGLEg+2xinoQYnAQcH4H0QxwEQpwEGJwInQD7bSwfgQD7bAKfhBicNBwfsfRDHYRCnYQTnAQQ9NwCnKQYnQQcH4H0QxwkQpwjnQD0zCOfAPnsBJg8IED7bAQQHETDnTdZ9Bg8EBRAN8JAREOQwkD4Vk////6QL///9FMeTp+v7//0G8/f///+nv/v//kJCQkA==")
-		
+	
 		if (!this.desktop and !this.hwnd := winexist(title)) {
 			msgbox % "Could not find window: " title "!`n`nScanner will not function!"
 			return
@@ -69,20 +69,20 @@ class ShinsImageScanClass {
 	;
 	;image				:				Path to image file
 	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
-	;&x					:				Variable to store the x result into
-	;&y					:				Variable to store the y result into
+	;&returnX			:				Variable to store the x result into
+	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if the image was found; 0 otherwise
 	
-	Image(image,variance=0,ByRef x=0,ByRef y=0) {
+	Image(image,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
 		data := dllcall(this._ScanImage,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
 		if (data > 0) {
-			y := data & 0xFFFF
-			x := data >> 16
+			returnX := data >> 16
+			returnY := data & 0xFFFF
 			return 1
 		}
 		return 0
@@ -98,20 +98,20 @@ class ShinsImageScanClass {
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
 	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
-	;&x					:				Variable to store the x result into
-	;&y					:				Variable to store the y result into
+	;&returnX			:				Variable to store the x result into
+	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if the image was found in the specified region; 0 otherwise
 	
-	ImageRegion(image,x1,y1,w,h,variance=0,ByRef x=0,ByRef y=0) {
+	ImageRegion(image,x1,y1,w,h,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance)
+		data := dllcall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		if (data > 0) {
-			y := data & 0xFFFF
-			x := data >> 16
+			returnX := data >> 16
+			returnY := data & 0xFFFF
 			return 1
 		}
 		return 0
@@ -131,7 +131,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanImageCount,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance)
+		c := dllcall(this._ScanImageCount,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -153,8 +153,45 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance)
+		c := dllcall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
+	}
+
+
+	;####################################################################################################################################################################################################################################
+	;ImageClosestToPoint
+	;
+	;image				:				Path to image file
+	;pointX				:				x position of the point
+	;pointY				:				y position of the point
+	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;&returnX			:				Variable to store the x result into
+	;&returnY			:				Variable to store the y result into
+	;centerResults		:				Value between 0-1, if enabled the positions returned will be centered as oposed to top left of the target image
+	;									This also affects distance calculations for closest image
+	;MaxRadius			:				Maximum circular radius to search in; lower values require images to be closer to the point
+	;
+	;return				;				Returns 1 if an image was found close enough to the point; 0 otherwise
+	
+	ImageClosestToPoint(image,pointX,pointY,variance=0,byref returnX=0,byref returnY=0,centerResults=1,maxRadius=9999) {
+		if (!c := this.ImageArray(image,a,variance,centerResults))
+			return 0
+		min := maxRadius
+		i := 0
+		loop % c {
+			xd := a[a_index].x - pointX
+			yd := a[a_index].y - pointY
+			dist := sqrt(xd*xd + yd*yd)
+			if (dist < min) {
+				min := dist
+				i := a_index
+			}
+		}
+		if (i = 0)
+			return 0
+		returnX := a[i].x
+		returnY := a[i].y
+		return 1
 	}
 	
 	
@@ -205,7 +242,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		count := dllcall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults)
+		count := dllcall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
 		if (count > 0) {
 			array := []
 			loop % count {
@@ -223,20 +260,20 @@ class ShinsImageScanClass {
 	;
 	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xAARRGGBB format)
 	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
-	;&x					:				Variable to store the x result into
-	;&y					:				Variable to store the y result into
+	;&returnX			:				Variable to store the x result into
+	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if pixel was found; 0 otherwise
 	
-	Pixel(color,variance=0,ByRef x=0,ByRef y=0) {
+	Pixel(color,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (color < 0xFF000000)
 			color += 0xFF000000
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance)
+		data := dllcall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
 		if (data > 0) {
-			y := data & 0xFFFF
-			x := data >> 16
+			returnX := data >> 16
+			returnY := data & 0xFFFF
 			return 1
 		}
 		return 0
@@ -252,20 +289,20 @@ class ShinsImageScanClass {
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
 	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
-	;&x					:				Variable to store the x result into
-	;&y					:				Variable to store the y result into
+	;&returnX			:				Variable to store the x result into
+	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if a pixel inside the specified region was found; 0 otherwise
 	
-	PixelRegion(color,x1,y1,w,h,trans=0,byref x=0,byref y=0) {
+	PixelRegion(color,x1,y1,w,h,variance=0,byref returnX=0,byref returnY=0) {
 		if (color < 0xFF000000)
 			color += 0xFF000000
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance)
+		data := dllcall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		if (data > 0) {
-			y := data & 0xFFFF
-			x := data >> 16
+			returnX := data >> 16
+			returnY := data & 0xFFFF
 			return 1
 		}
 		return 0
@@ -285,7 +322,7 @@ class ShinsImageScanClass {
 			color += 0xFF000000
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color,"uchar",variance)
+		c := dllcall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -307,7 +344,7 @@ class ShinsImageScanClass {
 			color += 0xFF000000
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance)
+		c := dllcall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
