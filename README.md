@@ -50,10 +50,10 @@ GetPixel(x, y)
 
 ## Notes
 
-Only for AHK_L, V2 is not supported
+* Only for AHK_L, V2 is not supported
 
-When searching for images, using source files without transparency will generally be faster
-Searching for all images such as ImageCount() etc. will take significantly longer when using color variance; when possible try to avoid using color variance if speed is a concern
+* When searching for images, using source files without transparency will generally be faster
+* Searching for all images such as ImageCount() etc. will take significantly longer when using color variance; when possible try to avoid using color variance if speed is a concern
 
-I've only tested on my end and can confirm it works for me using 32/64 bit ahk L on windows 10
-if it doesn't work for you let me know, I may be able to help, or may not just depends.
+* I've only tested on my end and can confirm it works for me using 32/64 bit ahk L on windows 10
+* if it doesn't work for you let me know, I may be able to help, or may not just depends.
