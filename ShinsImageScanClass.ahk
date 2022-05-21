@@ -16,8 +16,8 @@ class ShinsImageScanClass {
 	;title		:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
 	__New(title:=0) {
 	
+	
 		this.AutoUpdate := 1 ;when disabled, requires you to call Update() manually to refresh pixel data, useful when you need to scan multiple things on 1 frame
-		
 		
 		
 		
@@ -45,7 +45,8 @@ class ShinsImageScanClass {
 		this._ScanPixelRegion := this.mcode("VVdWU4PsHIt0JDiLXCQ4i2wkPItUJDSLRCRIA1wkQANsJESF9g+IhgEAAItMJDyFyQ+IegEAAIt0JDAPt3YIjU7/Od6JdCQQD07Zi0wkMA+3SQqNcf856Q9O7oTAD4TdAAAAO2wkPA+OwwAAAInHidCLdCQQiWwkGMHoEA+vdCQ8D7bAiQQkD7bGiUQkBIn4D7bAiXQkFIlEJAgPtsKJRCQMO1wkOH5ki0QkMIt0JBSLAI0ssIt0JDiLVLUAidHB+RAPtskrDCSJyMH4HzHBKcEPtsYrRCQED7bSicfB/x8x+Cn4OcEPTMgrVCQMidfB/x8x+in6OdEPTdE7VCQID46bAAAAg8YBOfN1rYt0JBCDRCQ8AQF0JBSLRCQYO0QkPA+Fe////4n2jbwnAAAAALj/////60yJ9o28JwAAAAA7bCQ8fuqLdCQQi3wkPMHmAg+v/jtcJDh+NotEJDiJBCSLRCQwiwiLBCQB+esJZpCDwAE5w3QZORSBdfTB4BADRCQ8g8QcW15fXcOQjXQmAINEJDwBAfc7bCQ8dbfrkZCLRCQ8weYQg8QcWwHwXl9dw7j9////68uQkJCQkJCQkA==|QVdBVkFVQVRVV1ZTSIPsGIuEJJAAAABEi5wkgAAAAIu8JIgAAABED7bgRQHDRAHPRYXAD4hhAQAARYXJD4hYAQAAD7dpEESNVf9EOd1FD07aRA+3URJBjVr/QTn6D077hMAPhMgAAABEOc8PjrcAAABEichBidUPtvKJfCQID6/FQcHtEIlsJAyJ9UUPtu2JRCQED7bGicdFOcN+b0hjRCQESIsRSWPYTI08gkGLFJ9Bid6J0MH4EA+2wEQp6EGJwkHB+h9EMdBEKdBBicIPtsYPttIp+InGwf4fMfAp8EE5wkEPTcIp6kGJ0kHB+h9EMdJEKdI50A9MwkQ54A+OjQAAAEiDwwFBOdt/oIt0JAxBg8EBAXQkBEQ5TCQID4V1////Dx9EAAC4/////+s5kEQ5z37zRInOD6/1RTnDfkBIixlIY8ZNY9BIjRyD6wqQSYPCAUU5034nRInQQjkUk3XuweAQRAHISIPEGFteX11BXEFdQV5BX8MPH4AAAAAAQYPBAQHuRDnPdbDrmw8fAEHB5hBDjQQO6864/f///+vHkJCQkJCQkJCQkJCQkJCQ")
 		this._ScanPixelCount := this.mcode("VVdWU4PsJIt0JDiLVCRAi0wkPA+3XggPt3YKiVwkEIl0JBiE0g+E5QAAAIX2D4REAQAAD7bCicqNNJ0AAAAAx0QkHAAAAACJRCQIweoQD7bBiXQkIA+28sdEJBQAAAAAiUQkDIl0JAQPtvWJNCQx9otMJBCFyXRyi0QkOItcJByLTCQgiwCNFJ0AAAAAjSwIjRwQAdWNdgCLEw+2zisMJInQD7bSic/B+BDB/x8PtsArRCQEMfkp+YnHwf8fMfgp+DnBD0zIK1QkDInXwf8fMfop+jnRD03RMcA7VCQID57Ag8MEAcY53XWug0QkFAGLTCQQi0QkFAFMJBw5RCQYD4Vr////g8QkifBbXl9dw5CLVCQYhdJ0X4nYMe0x/zH2weACiQQkjXYAjbwnAAAAAItEJBCFwHQoi0QkOI0crQAAAACLEI0EGgMUJAHTjXYAMdI7CA+UwoPABAHWOdh18IPHAQNsJBA5fCQYdcODxCSJ8FteX13Dg8QkMfZbifBeX13DkJCQkJCQkJCQkJCQkA==|QVdBVkFVQVRVV1ZTSIPsGA+3QRJED7dhEIlEJARJic1BD7bwRYTAD4TjAAAAhcAPhOwBAABBjUQk/4nXD7buRTH/SIlEJAjB7xBFMfZFMdtAD7b/D7bKZg8fhAAAAAAARYXkdHxJi1UASWPHTI0MgkgDRCQISI1cggRmDx9EAABBixEPtsYp6EGJwEHB+B9EMcBEKcBBicCJ0A+20sH4EA+2wCn4QYnCQcH6H0Qx0EQp0EE5wEEPTcApykGJ0EHB+B9EMcJEKcI50A9MwjnwD57ASYPBBA+2wEEBw0w5y3WfQYPGAUUB50Q5dCQED4Vt////RInYSIPEGFteX11BXEFdQV5BX8NmDx+EAAAAAACJx4XAD4QHAQAARInjRYniZg9u2jHJwesCQY10JP9Bg+L8RTHJSMHjBEUx22YPcNMADx+AAAAAAEWF5A+EtwAAAE2LRQCD/gMPhr8AAABIY8FmD+/JSY0EgEiNLAMPHwDzD28ASIPAEGYPdsJmD/rISDnodetmD2/BZg9z2AhmD/7IZg9vwWYPc9gEZg/+yGYPfshBAcNEidBFOeJ0Wo0sAUhj7UE5FKh1BEGDwwGNaAFBOex+QgHNSGPtQTsUqHUEQYPDAY1oAkE57H4rAc1IY+1BOxSodQRBg8MBg8ADRDngfRQByEiYQTkUgHUKQYPDAWYPH0QAAEGDwQFEAeFEOc8PhTD////p1v7//zHA641FMdvpyv7//5CQkJCQkJA=")
 		this._ScanPixelCountRegion := this.mcode("VVdWU4PsKIt0JESLXCREi2wkSItEJECLVCRUA1wkTANsJFCF9g+IwAEAAItMJEiFyQ+ItAEAAIt0JDwPt3YIOd6NTv+JdCQYD0/Li1wkPIlMJBAPt0sKjVn/OekPT92JXCQUhNIPhPUAAAA7XCRID45qAQAAD690JEiLTCQQideJwsHqEIn7D7bbiXQkHIt0JESJXCQIweYCiXQkII00jQAAAACJdCQkD7byiXQkBA+29A+2wIlEJAyJNCQx9maQi0QkEDtEJER+cItEJDyLXCQgiyiLRCQcweACAcMB6wNsJCQBxY12AIsTD7bOKwwkidAPttKJz8H4EMH/Hw+2wCtEJAQx+Sn5icfB/x8x+Cn4OcEPTMgrVCQMidfB/x8x+in6OdEPTdExwDtUJAgPnsCDwwQBxjndda6LXCQYg0QkSAEBXCQci0QkFDtEJEgPhWv///+DxCiJ8FteX13DkDtcJEh+eYt0JESLfCQYD698JEiLbCRIweYCiXQkBIt0JBDB5gKJNCQx9o22AAAAAItcJBA7XCREfi6LXCQ8i1QkBIsLjRy9AAAAAAHaAcoDDCQBy410JgAxyTsCD5TBg8IEAc452nXwg8UBA3wkGDlsJBR1u4PEKInwW15fXcODxCgx9luJ8F5fXcO+/f///+lg////kJCQkJCQkJCQkJA=|QVdBVkFVQVRVV1ZTSIPsKIuEJKAAAABEi7QkkAAAAIucJJgAAAAPtvBEiYQkgAAAAEmJzUUBxkQBy0WFwA+IjgIAAEWFyQ+IhQIAAA+3eRCNT/9EOfeJfCQERA9O8UEPt00SRI1B/znZRA9Pw0SJBCSEwA+FZwEAAEQ5DCQPjkYCAABBifhEifcrvCSAAAAAi5wkgAAAAIn4jXf/Zg9u2kGJ/8HoAkGD5/yJdCQIZg9w0wBIweAERQ+vwUQB+4P+A0iJRCQQSGOEJIAAAAAPRpwkgAAAAEUx5EiJRCQYRI1bAY1zAo1rAw8fhAAAAAAARDu0JIAAAAAPjroAAACDfCQIA02LVQB2WkiLTCQQSWPASANEJBhmD+/JSY0EgkgBwQ8fgAAAAADzD28ASIPAEGYPdsJmD/rISDnIdetmD2/BZg9z2AhmD/7IZg9vwWYPc9gEZg/+yGYPfshBAcREOf90VUGNBBhImEE5FIJ1BEGDxAFFOd5+QEONBBhImEE7FIJ1BEGDxAFBOfZ+K0GNBDBImEE7FIJ1BEGDxAFEOfV9FkKNRAUASJhBORSCdQlBg8QBDx9EAABBg8EBRANEJAREOQwkD4Ul////RIngSIPEKFteX11BXEFdQV5BX8OQRTnID47gAAAAi4QkgAAAAA+27kUx5A+2ykEPr/lIY5wkgAAAAPfQRAHwSIlcJAhIAdhBif+J10iJRCQQwe8QQA+2/w8fRAAARDu0JIAAAAB+f0iLXCQISYtVAEljx0yNBBhIA0QkEE6NFIJIjVyCBEGLEg+2xinoQYnAQcH4H0QxwEQpwEGJwInQD7bSwfgQD7bAKfhBicNBwfsfRDHYRCnYQTnAQQ9NwCnKQYnQQcH4H0QxwkQpwjnQD0zCOfAPnsBJg8IED7bAQQHETDnTdZ9Bg8EBRAN8JAREOQwkD4Vk////6QL///9FMeTp+v7//0G8/f///+nv/v//kJCQkA==")
-	
+		this._ScanPixelPosition := this.mcode("VVdWU4tUJBSLdCQci1wkGA+3QgiLfCQgi0wkJDnwD4aEAAAAD7dqCjn9dnwPr8eLEgHwiwSCugEAAAA52HRdMdKEyXRXicKJ3g+2ycH6EMHuEA+2+onyD7byKfeJ/on6D7b/D7bbwf4fMfIp8onWD7bUD7bAKfqJ18H/HzH6Kfo51g9N1inYicPB+x8x2CnYOcIPTcIx0jnBD53CW4nQXl9dw5CNdCYAuv7////r7ZA=|Uw+3QRBEi1QkMEQ5wA+GnQAAAEQPt1kSRTnLD4aPAAAARA+vyEiLAUUByEKLBIBBuAEAAAA50HRqRTHARYTSdGKJwUGJ0A+23kUPtsrB+RBBwegQD7bSRQ+2wA+2yUQpwUGJyEHB+B9EMcFEKcFBicgPtswPtsAp2UGJykHB+h9EMdFEKdFBOchBD03IKdCZMdAp0DnBD03BRTHAQTnBQQ+dwESJwFvDDx+EAAAAAABBuP7////r65CQkJCQkJCQ")
+		
 		if (!this.desktop and !this.hwnd := winexist(title)) {
 			msgbox % "Could not find window: " title "!`n`nScanner will not function!"
 			return
@@ -68,13 +69,13 @@ class ShinsImageScanClass {
 	;Image
 	;
 	;image				:				Path to image file
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;&returnX			:				Variable to store the x result into
 	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if the image was found; 0 otherwise
 	
-	Image(image,variance=0,ByRef returnX=0,ByRef returnY=0) {
+	Image(image, variance=0, ByRef returnX=0, ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -97,13 +98,13 @@ class ShinsImageScanClass {
 	;y1					:				Top left starting y position
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;&returnX			:				Variable to store the x result into
 	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if the image was found in the specified region; 0 otherwise
 	
-	ImageRegion(image,x1,y1,w,h,variance=0,ByRef returnX=0,ByRef returnY=0) {
+	ImageRegion(image, x1, y1, w, h, variance=0, ByRef returnX=0, ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -122,11 +123,11 @@ class ShinsImageScanClass {
 	;ImageCount
 	;
 	;image				:				Path to image file
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;
 	;return				;				Returns the amount of images found; 0 otherwise
 	
-	ImageCount(image,variance=0) {
+	ImageCount(image, variance=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -144,11 +145,11 @@ class ShinsImageScanClass {
 	;y1					:				Top left starting y position
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;
 	;return				;				Returns the amount of images found in the specified region; 0 otherwise
 	
-	ImageCountRegion(image,x1,y1,w,h,variance=0) {
+	ImageCountRegion(image, x1, y1, w, h, variance=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -164,7 +165,7 @@ class ShinsImageScanClass {
 	;image				:				Path to image file
 	;pointX				:				x position of the point
 	;pointY				:				y position of the point
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;&returnX			:				Variable to store the x result into
 	;&returnY			:				Variable to store the y result into
 	;centerResults		:				Value between 0-1, if enabled the positions returned will be centered as oposed to top left of the target image
@@ -173,7 +174,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if an image was found close enough to the point; 0 otherwise
 	
-	ImageClosestToPoint(image,pointX,pointY,variance=0,byref returnX=0,byref returnY=0,centerResults=1,maxRadius=9999) {
+	ImageClosestToPoint(image, pointX, pointY, variance=0, byref returnX=0, byref returnY=0, centerResults=1, maxRadius=9999) {
 		if (!c := this.ImageArray(image,a,variance,centerResults))
 			return 0
 		min := maxRadius
@@ -200,12 +201,12 @@ class ShinsImageScanClass {
 	;
 	;image				:				Path to image file
 	;&array				:				An array which will hold all the image locations (first element would be array[1].x and array[1].y)
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;centerResults		:				Value between 0-1, if enabled the positions returned will be centered as oposed to top left of the target image
 	;
 	;return				;				Returns 1 (and updates &array) if any number of images were found; 0 otherwise
 	
-	ImageArray(image,byref array,variance=0,centerResults=1) {
+	ImageArray(image, byref array, variance=0, centerResults=1) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -232,12 +233,12 @@ class ShinsImageScanClass {
 	;y1					:				Top left starting y position
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;centerResults		:				Value between 0-1, if enabled the positions returned will be centered as oposed to top left of the target image
 	;
 	;return				;				Returns 1 (and updates &array) if any number of images were found in the specified region; 0 otherwise
 	
-	ImageArrayRegion(image,byref array,x1,y1,w,h,variance=0,centerResults=1) {
+	ImageArrayRegion(image, byref array, x1, y1, w, h, variance=0, centerResults=1) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -258,16 +259,16 @@ class ShinsImageScanClass {
 	;####################################################################################################################################################################################################################################
 	;Pixel
 	;
-	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xAARRGGBB format)
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xFFRRGGBB format)
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;&returnX			:				Variable to store the x result into
 	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if pixel was found; 0 otherwise
 	
-	Pixel(color,variance=0,ByRef returnX=0,ByRef returnY=0) {
-		if (color < 0xFF000000)
-			color += 0xFF000000
+	Pixel(color, variance=0, ByRef returnX=0, ByRef returnY=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
 		if (this.AutoUpdate)
 			this.Update()
 		data := dllcall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
@@ -283,20 +284,20 @@ class ShinsImageScanClass {
 	;####################################################################################################################################################################################################################################
 	;PixelRegion
 	;
-	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xAARRGGBB format)
+	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xFFRRGGBB format)
 	;x1					:				Top left starting x position
 	;y1					:				Top left starting y position
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;&returnX			:				Variable to store the x result into
 	;&returnY			:				Variable to store the y result into
 	;
 	;return				;				Returns 1 if a pixel inside the specified region was found; 0 otherwise
 	
-	PixelRegion(color,x1,y1,w,h,variance=0,byref returnX=0,byref returnY=0) {
-		if (color < 0xFF000000)
-			color += 0xFF000000
+	PixelRegion(color, x1, y1, w, h, variance=0, byref returnX=0, byref returnY=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
 		if (this.AutoUpdate)
 			this.Update()
 		data := dllcall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
@@ -312,14 +313,14 @@ class ShinsImageScanClass {
 	;####################################################################################################################################################################################################################################
 	;PixelCount
 	;
-	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xAARRGGBB format)
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xFFRRGGBB format)
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;
 	;return				;				Returns the amount of matching pixels; 0 otherwise
 	
-	PixelCount(color,variance=0) {
-		if (color < 0xFF000000)
-			color += 0xFF000000
+	PixelCount(color, variance=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
 		if (this.AutoUpdate)
 			this.Update()
 		c := dllcall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
@@ -330,18 +331,18 @@ class ShinsImageScanClass {
 	;####################################################################################################################################################################################################################################
 	;PixelCountRegion
 	;
-	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xAARRGGBB format)
+	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xFFRRGGBB format)
 	;x1					:				Top left starting x position
 	;y1					:				Top left starting y position
 	;w					:				Width of pixels to search, starting from x1
 	;h					:				Height of pixels to search, starting from y1
-	;variance			:				Value between 0-255, determines close/far pixels must be to match the target color
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
 	;
 	;return				;				Returns the amount of matching pixels in the specified region; 0 otherwise
 	
-	PixelCountRegion(color,x1,y1,w,h,variance=0) {
-		if (color < 0xFF000000)
-			color += 0xFF000000
+	PixelCountRegion(color, x1, y1, w, h, variance=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
 		if (this.AutoUpdate)
 			this.Update()
 		c := dllcall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
@@ -349,14 +350,61 @@ class ShinsImageScanClass {
 	}
 	
 	
+	;####################################################################################################################################################################################################################################
+	;PixelPosition
+	;
+	;color				:				Color of pixel to match at a given position(can be in 0xRRGGBB or 0xFFRRGGBB format)
+	;pointX				:				X position
+	;pointY				:				Y position
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
+	;
+	;return				;				Returns 1 if the color matched at the specified position; 0 otherwise
 	
+	PixelPosition(color, pointX, pointY, variance=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
+		if (this.AutoUpdate)
+			this.Update()
+		c := dllcall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color,"uint",pointX,"uint",pointY,"uint",variance,"int")
+		return (c == 1 ? 1 : 0)
+	}
+	
+
+	;####################################################################################################################################################################################################################################
+	;GetPixel
+	;
+	;x					:				X position
+	;y					:				Y position
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
+	;
+	;return				;				Returns the pixel color at the specified position; 0 otherwise
+	
+	GetPixel(x, y) {
+		if (this.AutoUpdate)
+			this.Update()
+		if (x < 0 or y < 0 or x >= this.width or y >= this.height) {
+			msgbox % "Cannot get a pixel at position: " x "," y " as it lies outside of the source region!"
+			return 0
+		}
+		return numget(this.temp0,(x+y*this.width)*4,"uint")
+	}
 	
 	
 	
 	;########################################## 
 	;  internal functions used by the class
 	;########################################## 
-	
+	CheckColorFormat(byref color) {
+		if (color < 0xFF000000) {
+			if (color > 0xFFFFFF) {
+				msgbox % "Partial color transparency is not supported!`n`nPixel scanning arguments for color must be in 0xFFRRGGBB or 0xRRGGBB format!"
+				return 0
+			} else {
+				color += 0xFF000000
+			}
+		}
+		return 1
+	}
 	CheckWindow() {
 		if (this.desktop)
 			return 1
