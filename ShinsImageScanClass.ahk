@@ -16,8 +16,8 @@ class ShinsImageScanClass {
 	;title		:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
 	__New(title:=0) {
 	
-	
 		this.AutoUpdate := 1 ;when disabled, requires you to call Update() manually to refresh pixel data, useful when you need to scan multiple things on 1 frame
+		
 		
 		
 		
@@ -27,7 +27,7 @@ class ShinsImageScanClass {
 		if (!DllCall("GetModuleHandle", "str", "gdiplus", "Ptr"))
 			DllCall("LoadLibrary", "str", "gdiplus")
 		VarSetCapacity(gsi, 24, 0)
-		numput(1,gsi,0,"uint")
+		NumPut(1,gsi,0,"uint")
 		DllCall("gdiplus\GdiplusStartup", "Ptr*", token, "Ptr", &gsi, "Ptr", 0)
 		this.gdiplusToken := token
 		
@@ -45,6 +45,7 @@ class ShinsImageScanClass {
 		this._ScanPixelRegion := this.mcode("VVdWU4PsHIt0JDiLXCQ4i2wkPItUJDSLRCRIA1wkQANsJESF9g+IhgEAAItMJDyFyQ+IegEAAIt0JDAPt3YIjU7/Od6JdCQQD07Zi0wkMA+3SQqNcf856Q9O7oTAD4TdAAAAO2wkPA+OwwAAAInHidCLdCQQiWwkGMHoEA+vdCQ8D7bAiQQkD7bGiUQkBIn4D7bAiXQkFIlEJAgPtsKJRCQMO1wkOH5ki0QkMIt0JBSLAI0ssIt0JDiLVLUAidHB+RAPtskrDCSJyMH4HzHBKcEPtsYrRCQED7bSicfB/x8x+Cn4OcEPTMgrVCQMidfB/x8x+in6OdEPTdE7VCQID46bAAAAg8YBOfN1rYt0JBCDRCQ8AQF0JBSLRCQYO0QkPA+Fe////4n2jbwnAAAAALj/////60yJ9o28JwAAAAA7bCQ8fuqLdCQQi3wkPMHmAg+v/jtcJDh+NotEJDiJBCSLRCQwiwiLBCQB+esJZpCDwAE5w3QZORSBdfTB4BADRCQ8g8QcW15fXcOQjXQmAINEJDwBAfc7bCQ8dbfrkZCLRCQ8weYQg8QcWwHwXl9dw7j9////68uQkJCQkJCQkA==|QVdBVkFVQVRVV1ZTSIPsGIuEJJAAAABEi5wkgAAAAIu8JIgAAABED7bgRQHDRAHPRYXAD4hhAQAARYXJD4hYAQAAD7dpEESNVf9EOd1FD07aRA+3URJBjVr/QTn6D077hMAPhMgAAABEOc8PjrcAAABEichBidUPtvKJfCQID6/FQcHtEIlsJAyJ9UUPtu2JRCQED7bGicdFOcN+b0hjRCQESIsRSWPYTI08gkGLFJ9Bid6J0MH4EA+2wEQp6EGJwkHB+h9EMdBEKdBBicIPtsYPttIp+InGwf4fMfAp8EE5wkEPTcIp6kGJ0kHB+h9EMdJEKdI50A9MwkQ54A+OjQAAAEiDwwFBOdt/oIt0JAxBg8EBAXQkBEQ5TCQID4V1////Dx9EAAC4/////+s5kEQ5z37zRInOD6/1RTnDfkBIixlIY8ZNY9BIjRyD6wqQSYPCAUU5034nRInQQjkUk3XuweAQRAHISIPEGFteX11BXEFdQV5BX8MPH4AAAAAAQYPBAQHuRDnPdbDrmw8fAEHB5hBDjQQO6864/f///+vHkJCQkJCQkJCQkJCQkJCQ")
 		this._ScanPixelCount := this.mcode("VVdWU4PsJIt0JDiLVCRAi0wkPA+3XggPt3YKiVwkEIl0JBiE0g+E5QAAAIX2D4REAQAAD7bCicqNNJ0AAAAAx0QkHAAAAACJRCQIweoQD7bBiXQkIA+28sdEJBQAAAAAiUQkDIl0JAQPtvWJNCQx9otMJBCFyXRyi0QkOItcJByLTCQgiwCNFJ0AAAAAjSwIjRwQAdWNdgCLEw+2zisMJInQD7bSic/B+BDB/x8PtsArRCQEMfkp+YnHwf8fMfgp+DnBD0zIK1QkDInXwf8fMfop+jnRD03RMcA7VCQID57Ag8MEAcY53XWug0QkFAGLTCQQi0QkFAFMJBw5RCQYD4Vr////g8QkifBbXl9dw5CLVCQYhdJ0X4nYMe0x/zH2weACiQQkjXYAjbwnAAAAAItEJBCFwHQoi0QkOI0crQAAAACLEI0EGgMUJAHTjXYAMdI7CA+UwoPABAHWOdh18IPHAQNsJBA5fCQYdcODxCSJ8FteX13Dg8QkMfZbifBeX13DkJCQkJCQkJCQkJCQkA==|QVdBVkFVQVRVV1ZTSIPsGA+3QRJED7dhEIlEJARJic1BD7bwRYTAD4TjAAAAhcAPhOwBAABBjUQk/4nXD7buRTH/SIlEJAjB7xBFMfZFMdtAD7b/D7bKZg8fhAAAAAAARYXkdHxJi1UASWPHTI0MgkgDRCQISI1cggRmDx9EAABBixEPtsYp6EGJwEHB+B9EMcBEKcBBicCJ0A+20sH4EA+2wCn4QYnCQcH6H0Qx0EQp0EE5wEEPTcApykGJ0EHB+B9EMcJEKcI50A9MwjnwD57ASYPBBA+2wEEBw0w5y3WfQYPGAUUB50Q5dCQED4Vt////RInYSIPEGFteX11BXEFdQV5BX8NmDx+EAAAAAACJx4XAD4QHAQAARInjRYniZg9u2jHJwesCQY10JP9Bg+L8RTHJSMHjBEUx22YPcNMADx+AAAAAAEWF5A+EtwAAAE2LRQCD/gMPhr8AAABIY8FmD+/JSY0EgEiNLAMPHwDzD28ASIPAEGYPdsJmD/rISDnodetmD2/BZg9z2AhmD/7IZg9vwWYPc9gEZg/+yGYPfshBAcNEidBFOeJ0Wo0sAUhj7UE5FKh1BEGDwwGNaAFBOex+QgHNSGPtQTsUqHUEQYPDAY1oAkE57H4rAc1IY+1BOxSodQRBg8MBg8ADRDngfRQByEiYQTkUgHUKQYPDAWYPH0QAAEGDwQFEAeFEOc8PhTD////p1v7//zHA641FMdvpyv7//5CQkJCQkJA=")
 		this._ScanPixelCountRegion := this.mcode("VVdWU4PsKIt0JESLXCREi2wkSItEJECLVCRUA1wkTANsJFCF9g+IwAEAAItMJEiFyQ+ItAEAAIt0JDwPt3YIOd6NTv+JdCQYD0/Li1wkPIlMJBAPt0sKjVn/OekPT92JXCQUhNIPhPUAAAA7XCRID45qAQAAD690JEiLTCQQideJwsHqEIn7D7bbiXQkHIt0JESJXCQIweYCiXQkII00jQAAAACJdCQkD7byiXQkBA+29A+2wIlEJAyJNCQx9maQi0QkEDtEJER+cItEJDyLXCQgiyiLRCQcweACAcMB6wNsJCQBxY12AIsTD7bOKwwkidAPttKJz8H4EMH/Hw+2wCtEJAQx+Sn5icfB/x8x+Cn4OcEPTMgrVCQMidfB/x8x+in6OdEPTdExwDtUJAgPnsCDwwQBxjndda6LXCQYg0QkSAEBXCQci0QkFDtEJEgPhWv///+DxCiJ8FteX13DkDtcJEh+eYt0JESLfCQYD698JEiLbCRIweYCiXQkBIt0JBDB5gKJNCQx9o22AAAAAItcJBA7XCREfi6LXCQ8i1QkBIsLjRy9AAAAAAHaAcoDDCQBy410JgAxyTsCD5TBg8IEAc452nXwg8UBA3wkGDlsJBR1u4PEKInwW15fXcODxCgx9luJ8F5fXcO+/f///+lg////kJCQkJCQkJCQkJA=|QVdBVkFVQVRVV1ZTSIPsKIuEJKAAAABEi7QkkAAAAIucJJgAAAAPtvBEiYQkgAAAAEmJzUUBxkQBy0WFwA+IjgIAAEWFyQ+IhQIAAA+3eRCNT/9EOfeJfCQERA9O8UEPt00SRI1B/znZRA9Pw0SJBCSEwA+FZwEAAEQ5DCQPjkYCAABBifhEifcrvCSAAAAAi5wkgAAAAIn4jXf/Zg9u2kGJ/8HoAkGD5/yJdCQIZg9w0wBIweAERQ+vwUQB+4P+A0iJRCQQSGOEJIAAAAAPRpwkgAAAAEUx5EiJRCQYRI1bAY1zAo1rAw8fhAAAAAAARDu0JIAAAAAPjroAAACDfCQIA02LVQB2WkiLTCQQSWPASANEJBhmD+/JSY0EgkgBwQ8fgAAAAADzD28ASIPAEGYPdsJmD/rISDnIdetmD2/BZg9z2AhmD/7IZg9vwWYPc9gEZg/+yGYPfshBAcREOf90VUGNBBhImEE5FIJ1BEGDxAFFOd5+QEONBBhImEE7FIJ1BEGDxAFBOfZ+K0GNBDBImEE7FIJ1BEGDxAFEOfV9FkKNRAUASJhBORSCdQlBg8QBDx9EAABBg8EBRANEJAREOQwkD4Ul////RIngSIPEKFteX11BXEFdQV5BX8OQRTnID47gAAAAi4QkgAAAAA+27kUx5A+2ykEPr/lIY5wkgAAAAPfQRAHwSIlcJAhIAdhBif+J10iJRCQQwe8QQA+2/w8fRAAARDu0JIAAAAB+f0iLXCQISYtVAEljx0yNBBhIA0QkEE6NFIJIjVyCBEGLEg+2xinoQYnAQcH4H0QxwEQpwEGJwInQD7bSwfgQD7bAKfhBicNBwfsfRDHYRCnYQTnAQQ9NwCnKQYnQQcH4H0QxwkQpwjnQD0zCOfAPnsBJg8IED7bAQQHETDnTdZ9Bg8EBRAN8JAREOQwkD4Vk////6QL///9FMeTp+v7//0G8/f///+nv/v//kJCQkA==")
+		this._ScanPixelCountRadius := this.mcode("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")
 		this._ScanPixelPosition := this.mcode("VVdWU4tUJBSLdCQci1wkGA+3QgiLfCQgi0wkJDnwD4aEAAAAD7dqCjn9dnwPr8eLEgHwiwSCugEAAAA52HRdMdKEyXRXicKJ3g+2ycH6EMHuEA+2+onyD7byKfeJ/on6D7b/D7bbwf4fMfIp8onWD7bUD7bAKfqJ18H/HzH6Kfo51g9N1inYicPB+x8x2CnYOcIPTcIx0jnBD53CW4nQXl9dw5CNdCYAuv7////r7ZA=|Uw+3QRBEi1QkMEQ5wA+GnQAAAEQPt1kSRTnLD4aPAAAARA+vyEiLAUUByEKLBIBBuAEAAAA50HRqRTHARYTSdGKJwUGJ0A+23kUPtsrB+RBBwegQD7bSRQ+2wA+2yUQpwUGJyEHB+B9EMcFEKcFBicgPtswPtsAp2UGJykHB+h9EMdFEKdFBOchBD03IKdCZMdAp0DnBD03BRTHAQTnBQQ+dwESJwFvDDx+EAAAAAABBuP7////r65CQkJCQkJCQ")
 		
 		if (!this.desktop and !this.hwnd := winexist(title)) {
@@ -60,7 +61,7 @@ class ShinsImageScanClass {
 		this.dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
 		this.tBufferPtr := tBufferPtr := this.SetVarCapacity("ttBuffer",4096,0)
 		this.dataPtr := dataPtr := this.SetVarCapacity("_data",64,0)
-		numput(tBufferPtr,dataPtr+0,(this.bits ? 8 : 4),"Ptr")
+		NumPut(tBufferPtr,dataPtr+0,(this.bits ? 8 : 4),"Ptr")
 		this.CreateDIB()
 	}
 	
@@ -75,12 +76,12 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if the image was found; 0 otherwise
 	
-	Image(image, variance=0, ByRef returnX=0, ByRef returnY=0) {
+	Image(image,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanImage,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
+		data := DllCall(this._ScanImage,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
 		if (data > 0) {
 			returnX := data >> 16
 			returnY := data & 0xFFFF
@@ -104,12 +105,12 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if the image was found in the specified region; 0 otherwise
 	
-	ImageRegion(image, x1, y1, w, h, variance=0, ByRef returnX=0, ByRef returnY=0) {
+	ImageRegion(image,x1,y1,w,h,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		if (data > 0) {
 			returnX := data >> 16
 			returnY := data & 0xFFFF
@@ -127,12 +128,12 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns the amount of images found; 0 otherwise
 	
-	ImageCount(image, variance=0) {
+	ImageCount(image,variance=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanImageCount,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
+		c := DllCall(this._ScanImageCount,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -149,12 +150,12 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns the amount of images found in the specified region; 0 otherwise
 	
-	ImageCountRegion(image, x1, y1, w, h, variance=0) {
+	ImageCountRegion(image,x1,y1,w,h,variance=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 
@@ -174,7 +175,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if an image was found close enough to the point; 0 otherwise
 	
-	ImageClosestToPoint(image, pointX, pointY, variance=0, byref returnX=0, byref returnY=0, centerResults=1, maxRadius=9999) {
+	ImageClosestToPoint(image,pointX,pointY,variance=0,byref returnX=0,byref returnY=0,centerResults=1,maxRadius=9999) {
 		if (!c := this.ImageArray(image,a,variance,centerResults))
 			return 0
 		min := maxRadius
@@ -206,16 +207,16 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 (and updates &array) if any number of images were found; 0 otherwise
 	
-	ImageArray(image, byref array, variance=0, centerResults=1) {
+	ImageArray(image,byref array,variance=0,centerResults=1) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		count := dllcall(this._ScanImageArray,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
+		count := DllCall(this._ScanImageArray,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
 		if (count > 0) {
 			array := []
 			loop % count {
-				v := numget(this.tBufferPtr,(a_index-1)*4,"uint")
+				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
 				array.push({x:v>>16,y:v&0xFFFF})
 			}
 			return count
@@ -238,16 +239,16 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 (and updates &array) if any number of images were found in the specified region; 0 otherwise
 	
-	ImageArrayRegion(image, byref array, x1, y1, w, h, variance=0, centerResults=1) {
+	ImageArrayRegion(image,byref array,x1,y1,w,h,variance=0,centerResults=1) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		count := dllcall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
+		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
 		if (count > 0) {
 			array := []
 			loop % count {
-				v := numget(this.tBufferPtr,(a_index-1)*4,"uint")
+				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
 				array.push({x:v>>16,y:v&0xFFFF})
 			}
 			return count
@@ -266,12 +267,12 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if pixel was found; 0 otherwise
 	
-	Pixel(color, variance=0, ByRef returnX=0, ByRef returnY=0) {
+	Pixel(color,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (!this.CheckColorFormat(color))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
+		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
 		if (data > 0) {
 			returnX := data >> 16
 			returnY := data & 0xFFFF
@@ -295,18 +296,38 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if a pixel inside the specified region was found; 0 otherwise
 	
-	PixelRegion(color, x1, y1, w, h, variance=0, byref returnX=0, byref returnY=0) {
+	PixelRegion(color,x1,y1,w,h,variance=0,byref returnX=0,byref returnY=0) {
 		if (!this.CheckColorFormat(color))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		data := dllcall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
 		if (data > 0) {
 			returnX := data >> 16
 			returnY := data & 0xFFFF
 			return 1
 		}
 		return 0
+	}
+	
+	
+	;####################################################################################################################################################################################################################################
+	;PixelPosition
+	;
+	;color				:				Color of pixel to match at a given position(can be in 0xRRGGBB or 0xFFRRGGBB format)
+	;pointX				:				X position
+	;pointY				:				Y position
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
+	;
+	;return				;				Returns 1 if the color matched at the specified position; 0 otherwise
+	
+	PixelPosition(color,pointX,pointY,variance=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
+		if (this.AutoUpdate)
+			this.Update()
+		c := DllCall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color,"uint",pointX,"uint",pointY,"uint",variance,"int")
+		return (c == 1 ? 1 : 0)
 	}
 	
 	
@@ -318,12 +339,12 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns the amount of matching pixels; 0 otherwise
 	
-	PixelCount(color, variance=0) {
+	PixelCount(color,variance=0) {
 		if (!this.CheckColorFormat(color))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -340,53 +361,91 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns the amount of matching pixels in the specified region; 0 otherwise
 	
-	PixelCountRegion(color, x1, y1, w, h, variance=0) {
+	PixelCountRegion(color,x1,y1,w,h,variance=0) {
 		if (!this.CheckColorFormat(color))
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := dllcall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		return (c > 0 ? c : 0)
+	}
+	
+	
+	
+	;####################################################################################################################################################################################################################################
+	;PixelCountRadius
+	;
+	;color				:				Color of pixel to find (can be in 0xRRGGBB or 0xFFRRGGBB format)
+	;pointX				:				X position
+	;pointY				:				Y position
+	;radius				:				Radius to search in
+	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
+	;
+	;return				;				Returns the amount of matching pixels in a specified radius; 0 otherwise
+	
+	PixelCountRadius(color,pointX,pointY,radius,variance=0) {
+		if (!this.CheckColorFormat(color))
+			return 0
+		if (this.AutoUpdate)
+			this.Update()
+		c := DllCall(this._ScanPixelCountRadius,"Ptr",this.dataPtr,"Uint",color,"uint",pointX,"uint",pointY,"uint",radius,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
 	
 	;####################################################################################################################################################################################################################################
-	;PixelPosition
-	;
-	;color				:				Color of pixel to match at a given position(can be in 0xRRGGBB or 0xFFRRGGBB format)
-	;pointX				:				X position
-	;pointY				:				Y position
-	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
-	;
-	;return				;				Returns 1 if the color matched at the specified position; 0 otherwise
-	
-	PixelPosition(color, pointX, pointY, variance=0) {
-		if (!this.CheckColorFormat(color))
-			return 0
-		if (this.AutoUpdate)
-			this.Update()
-		c := dllcall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color,"uint",pointX,"uint",pointY,"uint",variance,"int")
-		return (c == 1 ? 1 : 0)
-	}
-	
-
-	;####################################################################################################################################################################################################################################
 	;GetPixel
 	;
-	;x					:				X position
-	;y					:				Y position
-	;variance			:				Value between 0-255, determines how close/far pixels must be to match the target color
+	;pointX				:				X position
+	;pointY				:				Y position
 	;
-	;return				;				Returns the pixel color at the specified position; 0 otherwise
+	;return				;				Returns the pixel at the pointX,pointY location
 	
-	GetPixel(x, y) {
+	GetPixel(pointX,pointY) {
 		if (this.AutoUpdate)
 			this.Update()
-		if (x < 0 or y < 0 or x >= this.width or y >= this.height) {
-			msgbox % "Cannot get a pixel at position: " x "," y " as it lies outside of the source region!"
+		if (pointX < 0 or pointY < 0 or pointX >= this.width or pointY >= this.height) {
+			msgbox % "Cannot get a pixel at position: " pointX "," pointY " as it lies outside of the source region!"
 			return 0
 		}
-		return numget(this.temp0,(x+y*this.width)*4,"uint")
+		return NumGet(this.temp0,(pointX+pointY*this.width)*4,"uint")
+	}
+	
+	
+	;####################################################################################################################################################################################################################################
+	;SaveImage
+	;
+	;name				:				Name to save to file to
+	;
+	;return				;				Saves the current pixel buffer to a png image
+	
+	SaveImage(name) {
+		if (!InStr(name,".png"))
+			name .= ".png"
+		if (this.autoUpdate)
+			this.Update()
+		DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", this.hbm, "Ptr", 0, "Ptr*", bm)
+		
+		;largely borrowed from tic function, encoder stuff is a pain
+		DllCall("gdiplus\GdipGetImageEncodersSize", "uint*", nCount, "uint*", nSize)
+		VarSetCapacity(ci, nSize)
+		DllCall("gdiplus\GdipGetImageEncoders", "uint", nCount, "uint", nSize, "Ptr", &ci)
+		if !(nCount && nSize) {
+			msgbox % "Problem getting encoder information"
+			return 0
+		}
+		Loop % nCount {
+			sString := StrGet(NumGet(ci, (idx := (48+7*A_PtrSize)*(A_Index-1))+32+3*A_PtrSize), "UTF-16") ;Thanks tic, this particularily confused me!
+			if (InStr(sString, "*.PNG")) {
+				pCodec := &ci+idx
+				break
+			}
+		}
+		if (!pCodec) {
+			msgbox % "Problem finding png codec"
+			return 0
+		}
+		DllCall("gdiplus\GdipSaveImageToFile", "Ptr", bm, "Ptr", &name, "Ptr", pCodec, "uint", 0)
 	}
 	
 	
@@ -408,9 +467,9 @@ class ShinsImageScanClass {
 	CheckWindow() {
 		if (this.desktop)
 			return 1
-		dllcall("GetClientRect","Ptr",this.hwnd,"Ptr",this.tBufferPtr)
-    	w := numget(this.tBufferPtr+0,8)
-    	h := numget(this.tBufferPtr+0,12)
+		DllCall("GetClientRect","Ptr",this.hwnd,"Ptr",this.tBufferPtr)
+    	w := NumGet(this.tBufferPtr+0,8)
+    	h := NumGet(this.tBufferPtr+0,12)
 		if (w = 0 or h = 0)
 			return 0
 		if (w != this.width or h != this.height) {
@@ -422,7 +481,7 @@ class ShinsImageScanClass {
 		return 1
 	}
 	CreateDIB() {
-		varsetcapacity(_scan,8)
+		VarSetCapacity(_scan,8)
 		VarSetCapacity(bi,40,0)
 		NumPut(this.width,bi,4,"int")
 		NumPut(-this.height,bi,8,"int")
@@ -431,8 +490,8 @@ class ShinsImageScanClass {
 		NumPut(32,bi,14,"ushort")
 		this.hbm := DllCall("CreateDIBSection", "Ptr", this.dstDC, "Ptr", &bi, "uint", 0, "Ptr*", _scan, "Ptr", 0, "uint", 0, "Ptr")
 		this.temp0 := _scan
-		numput(_scan,this.dataPtr,0,"Ptr")
-		numput((this.height<<16)+this.width,this.dataPtr,(this.bits ? 16 : 8),"uint")
+		NumPut(_scan,this.dataPtr,0,"Ptr")
+		NumPut((this.height<<16)+this.width,this.dataPtr,(this.bits ? 16 : 8),"uint")
 		DllCall("SelectObject", "Ptr", this.dstDC, "Ptr", this.hbm)
 	}
 	SetVarCapacity(key,size,fill=0) {
@@ -462,21 +521,21 @@ class ShinsImageScanClass {
 			DllCall("gdiplus\GdipCreateBitmapFromFile", "Ptr", &image, "Ptr*", bm)
 		DllCall("gdiplus\GdipGetImageWidth", "Ptr", bm, "Uint*", w)
 		DllCall("gdiplus\GdipGetImageHeight", "Ptr", bm, "Uint*", h)
-		varsetcapacity(r,16)
-		numput(x,r,0,"uint")
-		numput(y,r,4,"uint")
-		numput(w,r,8,"uint")
-		numput(h,r,12,"uint")
+		VarSetCapacity(r,16)
+		NumPut(x,r,0,"uint")
+		NumPut(y,r,4,"uint")
+		NumPut(w,r,8,"uint")
+		NumPut(h,r,12,"uint")
 		VarSetCapacity(bmdata, 32, 0)
 		DllCall("Gdiplus\GdipBitmapLockBits", "Ptr", bm, "Ptr", &r, "uint", 3, "int", 0x26200A, "Ptr", &bmdata)
 		scan := NumGet(bmdata, 16, "Ptr")
 		p := DllCall("GlobalAlloc", "uint", 0x40, "ptr", 16+((w*h)*4), "ptr")
-		numput((w<<16)+h,p+0,0,"uint")
+		NumPut((w<<16)+h,p+0,0,"uint")
 		loop % ((w*h)*4)
-			numput(numget(scan+0,a_index-1,"uchar"),p+0,a_index+7,"uchar")
+			NumPut(NumGet(scan+0,a_index-1,"uchar"),p+0,a_index+7,"uchar")
 		loop % (w*h)
-			if (numget(scan+0,(a_index-1)*4,"uint") < 0xFF000000) {
-				numput(1,p+4,"uint")
+			if (NumGet(scan+0,(a_index-1)*4,"uint") < 0xFF000000) {
+				NumPut(1,p+4,"uint")
 				break
 			}
 		DllCall("Gdiplus\GdipBitmapUnlockBits", "Ptr", bm, "Ptr", &bmdata)
