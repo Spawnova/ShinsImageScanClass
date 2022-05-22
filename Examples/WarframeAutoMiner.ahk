@@ -1,3 +1,6 @@
+;watch https://youtu.be/Hu_CQB0s050
+;for instructions on how to setup the variables
+
 #noenv
 #singleinstance,force
 setbatchlines,-1
@@ -5,16 +8,16 @@ settitlematchmode,1
 
 gdip_startup()
 
-#include ShinsImageScanClass.ahk
+#include ../ShinsImageScanClass.ahk ;if your class file is located in the same folder you can remove the '../'
 
-scan := new ShinsImageScanClass()
+scan := new ShinsImageScanClass()  ;desktop mode, window must be active
 
 scan.autoUpdate := 0 ;turn off auto updating since we want to work on single frames
 
 
 skipNormalNodes :=	0
 reticleX := 		1278     ;these values apply to a 2k monitor in windowed fullscreen
-reticleY :=	 		729
+reticleY :=	 		729		 ;you will need to change these most likely
 lengthOuter := 		199
 lengthMid :=		175
 miningTime := 		4000
@@ -22,7 +25,7 @@ lTimer :=			0
 variance :=			0 ;if playing on a small resolution may need a higher variance
 return
 
-~xbutton2::      ;xbutton2 to trigger hotkey but also requires rbutton, since you have to aim for the drill
+~xbutton2::      ;xbutton2 to trigger hotkey but also requires rbutton, since you have to aim for the laser
 	gosub miner
 return
 
@@ -32,7 +35,7 @@ miner:
 if (a_tickcount > lTimer and GetKeyState("rbutton","p")) {
 	click,lbutton,down
 	lTimer := a_tickcount + miningTime
-	sleep 300 ;allow for the ui to fully show
+	sleep 350 ;allow for the ui to fully show
 	
 	scan.update() ;update the pixel buffer to screen pixels
 	extraMarkerTimer := 0
@@ -84,8 +87,8 @@ if (a_tickcount > lTimer and GetKeyState("rbutton","p")) {
 			TimeToXY(delta-deltaHalf,reticleX,reticleY,minx,miny,lengthMid,miningTime)
 			TimeToXY(delta+deltaHalf,reticleX,reticleY,maxx,maxy,lengthMid,miningTime)
 
-			if (scan.pixelregion(0xFFFFFF,minx-8,miny-8,16,16,variance)) {
-				if (scan.pixelregion(0xFFFFFF,maxx-8,maxy-8,16,16,variance)) {
+			if (scan.PixelCountRadius(0xFFFFFF,minx,miny,16,variance) > 0) {
+				if (scan.PixelCountRadius(0xFFFFFF,maxx,maxy,16,variance) > 0) {
 					click,lbutton,up
 					lTimer := 0
 					return
