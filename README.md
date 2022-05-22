@@ -35,17 +35,23 @@ Pixel(color, variance=0, ByRef returnX=0, ByRef returnY=0)
 #PixelRegion..............Find a pixel in a specified region; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
 PixelRegion(color, x1, y1, w, h, variance=0, byref returnX=0, byref returnY=0)
 
-#PixelCount...............Finds the cout of pixels; Returns the count of pixels
+#PixelCount...............Finds the count of pixels; Returns the count of pixels
 PixelCount(color, variance=0)
 
-#PixelCountRegion.........Finds the cout of pixels in a specified region; Returns the count of pixels in that region
+#PixelCountRegion.........Finds the count of pixels in a specified region; Returns the count of pixels in that region
 PixelCountRegion(color, x1, y1, w, h, variance=0)
+
+#PixelCountRadius.........Finds the count of pixels in a specified radius; Returns the count of pixels in that radius
+PixelCountRadius(color, pointX, pointY, radius, variance=0)
 
 #PixelPosition............Find a pixel in a specified region; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
 PixelPosition(color, pointX, pointY, variance=0)
 
 #GetPixel.................Gets the pixel at a specified position; Returns pixel color on success; 0 otherwise
 GetPixel(x, y)
+
+#SaveImage................Save the current pixel buffer to a png image;
+SaveImage(name)
 ```
 
 ## Notes
