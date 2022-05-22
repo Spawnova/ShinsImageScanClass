@@ -44,7 +44,7 @@ PixelCountRegion(color, x1, y1, w, h, variance=0)
 #PixelCountRadius.........Finds the count of pixels in a specified radius; Returns the count of pixels in that radius
 PixelCountRadius(color, pointX, pointY, radius, variance=0)
 
-#PixelPosition............Find a pixel in a specified region; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
+#PixelPosition............Checks a pixel at a specified position; Returns 1 on color match; 0 otherwise
 PixelPosition(color, pointX, pointY, variance=0)
 
 #GetPixel.................Gets the pixel at a specified position; Returns pixel color on success; 0 otherwise
