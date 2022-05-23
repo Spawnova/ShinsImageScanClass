@@ -6,8 +6,6 @@
 setbatchlines,-1
 settitlematchmode,1
 
-gdip_startup()
-
 #include ../ShinsImageScanClass.ahk ;if your class file is located in the same folder you can remove the '../'
 
 scan := new ShinsImageScanClass()  ;desktop mode, window must be active
