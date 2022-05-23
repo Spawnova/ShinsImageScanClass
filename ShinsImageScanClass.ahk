@@ -1,4 +1,5 @@
 ;Image/pixel scanning class by Spawnova (5/15/22)
+;https://github.com/Spawnova/ShinsImageScanClass
 ;
 ;General purpose class to scan image data for images and pixels, for ahk_L (not compatible with ahk V2)
 ;
@@ -9,7 +10,7 @@
 ;I can't promise it will work for every setup, I can only confirm that it works for me on windows 10 (32 and 64 bit)
 ;
 ;All returned coordinate positions are in client space, with the exception when scanning the desktop which uses screen space
-
+;
 
 class ShinsImageScanClass {
 
