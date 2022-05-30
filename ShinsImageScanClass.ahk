@@ -72,7 +72,7 @@ class ShinsImageScanClass {
 		
 		this.width := gw
 		this.height := gh
-		this.srcDC := DllCall("GetDCEx", "Ptr", (this.desktop ? 0 : this.hwnd),"Uint",0,"Uint",(this.UseClientArea ? 0 : 1|0x20))
+		this.srcDC := DllCall("GetDCEx", "Ptr", (this.desktop ? 0 : this.hwnd),"Uint",0,"Uint",(this.UseClientArea ? 0 : 1))
 		this.dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
 		NumPut(tBufferPtr,dataPtr+0,(this.bits ? 8 : 4),"Ptr")
 		this.CreateDIB()
@@ -575,7 +575,7 @@ class ShinsImageScanClass {
 		else if (!this.UseClientArea and !this.GetWindowRect(w,h))
 			return 0
 			
-		if (w != w or h != h) {
+		if (w != this.width or h != this.height) {
 			this.width := w
 			this.height := h
 			DllCall("DeleteObject","Ptr",this.hbm)
