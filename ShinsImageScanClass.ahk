@@ -9,12 +9,15 @@
 ;I designed this class to be relatively user friendly but still maintain good performance
 ;I can't promise it will work for every setup, I can only confirm that it works for me on windows 10 (32 and 64 bit)
 ;
-;All returned coordinate positions are in client space, with the exception when scanning the desktop which uses screen space
+;All returned coordinate positions are dependant on the mode used, desktop uses screen space, client uses client space, otherwise window space
 
 class ShinsImageScanClass {
 
-	;title		:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
-	__New(title:=0) {
+	;title				:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
+	;UseClientArea		:		If a window is specified it will use the client area (generally does not include title bar and menus)
+	;							Otherwise it will include the entirety of the window, which also includes extra space on the sides
+	;							and bottom used for mouse dragging
+	__New(title:=0, UseClientArea:=1) {
 	
 		this.AutoUpdate 		:= 1 	;when disabled, requires you to call Update() manually to refresh pixel data, useful when you need to scan multiple things on 1 frame
 		
@@ -34,12 +37,15 @@ class ShinsImageScanClass {
 		
 		this.bits := (a_ptrsize == 8) ;0=32,1=64
 		this.desktop := (title = 0 or title = "")
+		this.UseClientArea := UseClientArea
 		this.imageCache := []
 		
 		if (this.desktop)
 			coordmode,mouse,screen
-		else
+		else if (UseClientArea)
 			coordmode,mouse,client
+		else
+			coordmode,mouse,window
 
 		this._ScanImage := this.mcode("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")
 		this._ScanImageRegion := this.mcode("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")
@@ -54,19 +60,20 @@ class ShinsImageScanClass {
 		this._ScanPixelCountRadius := this.mcode("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")
 		this._ScanPixelPosition := this.mcode("V1ZTi1QkEItcJBiLdCQcD7dCCItMJCA52A+GkQAAAA+3ego59w+GhQAAAA+vxosSvgEAAAAB2ItcJBSLFIKB4////wCJ0CX///8AOdh0UzH2hMl0TYnGid8PttIPtsTB7xDB/hAPtskp/on3wf8fMf4p/g+2+w+23yn6idfB/x8x+in6OdYPTdYp2InDwfsfMdgp2DnCD0zQMcA50Q+dwInGifBbXl/DkI20JgAAAAC+/v///+vrkJCQkJCQkJCQ|D7dBEESLVCQoRDnAD4aeAAAARA+3WRJFOcsPhpAAAABED6/ISIsBgeL///8ARQHIQosMgEG4AQAAAInIJf///wA50HRkRTHARYTSdFxFD7bKQYnAQYnSD7bJQcHqEEHB+BAPtsRFKdBFicJBwfofRTHQRSnQRA+20g+21kQp0UGJykHB+h9EMdFEKdFBOchBD03IKdCZMdAp0DnBD0zIRTHAQTnJQQ+dwESJwMMPHwBBuP7////r8ZCQkJCQkJCQ")
 		
+		this.tBufferPtr := tBufferPtr := this.SetVarCapacity("ttBuffer",4096,0)
+		this.dataPtr := dataPtr := this.SetVarCapacity("_data",64,0)
+
 		if (!this.desktop and !this.hwnd := winexist(title)) {
 			msgbox % "Could not find window: " title "!`n`nScanner will not function!"
 			return
 		}
-		if (!this.GetClientSize(gw,gh))
+		if (!this.GetRect(gw,gh))
 			return
-			
+		
 		this.width := gw
 		this.height := gh
-		this.srcDC := DllCall("GetDC", "Ptr", (this.desktop ? 0 : this.hwnd))
+		this.srcDC := DllCall("GetDCEx", "Ptr", (this.desktop ? 0 : this.hwnd),"Uint",0,"Uint",(this.UseClientArea ? 0 : 1|0x20))
 		this.dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
-		this.tBufferPtr := tBufferPtr := this.SetVarCapacity("ttBuffer",4096,0)
-		this.dataPtr := dataPtr := this.SetVarCapacity("_data",64,0)
 		NumPut(tBufferPtr,dataPtr+0,(this.bits ? 8 : 4),"Ptr")
 		this.CreateDIB()
 	}
@@ -562,12 +569,13 @@ class ShinsImageScanClass {
 	CheckWindow() {
 		if (this.desktop)
 			return 1
-		DllCall("GetClientRect","Ptr",this.hwnd,"Ptr",this.tBufferPtr)
-    	w := NumGet(this.tBufferPtr+0,8)
-    	h := NumGet(this.tBufferPtr+0,12)
-		if (w = 0 or h = 0)
+		
+		if (this.UseClientArea and !this.GetClientRect(w,h))
 			return 0
-		if (w != this.width or h != this.height) {
+		else if (!this.UseClientArea and !this.GetWindowRect(w,h))
+			return 0
+			
+		if (w != w or h != h) {
 			this.width := w
 			this.height := h
 			DllCall("DeleteObject","Ptr",this.hbm)
@@ -642,23 +650,43 @@ class ShinsImageScanClass {
 		if (this.CheckWindow())
 			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020)
 	}
-	GetClientSize(ByRef w, ByRef h) {
+	GetRect(ByRef w, ByRef h) {
 		if (this.desktop) {  ;only gets primary screen for now, I may add support for virtual later
 			w := a_screenwidth
 			h := a_screenheight
 			return 1
 		}
-		VarSetCapacity(r, 16)
-		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", &r)) {
-			msgbox % "Problem getting client rectangle, is window minimized?`n`nScanner will not function!"
-			return 0
+		if (this.UseClientArea) {
+			if (!this.GetClientRect(w,h)) {
+				msgbox % "Problem with Client rectangle dimensions, is window minimized?`n`nScanner will not function!"
+				return 0
+			}
+		} else {
+			if (!this.GetWindowRect(w,h)) {
+				msgbox % "Problem with Window rectangle dimensions, is window minimized?`n`nScanner will not function!"
+				return 0
+			}
 		}
-		w := NumGet(r, 8, "int")
-		h := NumGet(r, 12, "int")
-		if (w = 0 or h = 0) {
-			msgbox % "Problem with client rectangle dimensions, is window minimized?`n`nScanner will not function!"
+		return 1
+	}
+	GetClientRect(byref w, byref h) {
+		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", this.tBufferPtr))
 			return 0
-		}
+		w := NumGet(this.tBufferPtr,8,"int")
+		h := NumGet(this.tBufferPtr,12,"int")
+		if (w <= 0 or h <= 0)
+			return 0
+		return 1
+	}
+	GetWindowRect(byref w, byref h) {
+		if (!DllCall("GetWindowRect", "Ptr", this.hwnd, "Ptr", this.tBufferPtr))
+			return 0
+		x := NumGet(this.tBufferPtr,0,"int")
+		y := NumGet(this.tBufferPtr,4,"int")
+		w := NumGet(this.tBufferPtr,8,"int") - x
+		h := NumGet(this.tBufferPtr,12,"int") - y
+		if (w <= 0 or h <= 0)
+			return 0
 		return 1
 	}
 	Random(min,max) {
