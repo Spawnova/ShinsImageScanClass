@@ -121,6 +121,7 @@ class ShinsImageScanClass {
 	ImageRegion(image,x1,y1,w,h,variance=0,ByRef returnX=0,ByRef returnY=0) {
 		if (!this.CacheImage(image))
 			return 0
+		this.CheckRegion(x1,y1,w,h)
 		if (this.AutoUpdate)
 			this.Update()
 		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
@@ -166,6 +167,7 @@ class ShinsImageScanClass {
 	ImageCountRegion(image,x1,y1,w,h,variance=0) {
 		if (!this.CacheImage(image))
 			return 0
+		this.CheckRegion(x1,y1,w,h)
 		if (this.AutoUpdate)
 			this.Update()
 		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
@@ -255,6 +257,7 @@ class ShinsImageScanClass {
 	ImageArrayRegion(image,byref array,x1,y1,w,h,variance=0,centerResults=1) {
 		if (!this.CacheImage(image))
 			return 0
+		this.CheckRegion(x1,y1,w,h)
 		if (this.AutoUpdate)
 			this.Update()
 		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
@@ -309,6 +312,7 @@ class ShinsImageScanClass {
 	;return				;				Returns 1 if a pixel inside the specified region was found; 0 otherwise
 	
 	PixelRegion(color,x1,y1,w,h,variance=0,byref returnX=0,byref returnY=0) {
+		this.CheckRegion(x1,y1,w,h)
 		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
@@ -371,6 +375,7 @@ class ShinsImageScanClass {
 	;return				;				Returns the amount of matching pixels in the specified region; 0 otherwise
 	
 	PixelCountRegion(color,x1,y1,w,h,variance=0) {
+		this.CheckRegion(x1,y1,w,h)
 		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
@@ -526,6 +531,7 @@ class ShinsImageScanClass {
 	;notes				:				Clicks randomly within the specified region
 	
 	ClickRegion(pointX,pointY,w,h,button:="left") {
+		this.CheckRegion(pointX,pointY,w,h)
 		pointX += this.Random(0,w)
 		pointY += this.Random(0,h)
 		return this.Click(pointX,pointY,button)
@@ -549,6 +555,16 @@ class ShinsImageScanClass {
 	;########################################## 
 	;  internal functions used by the class
 	;########################################## 
+	CheckRegion(byref x, byref y, byref w, byref h) {
+		if (w < 0) {
+			w := -w
+			x -= w
+		}
+		if (h < 0) {
+			h := -h
+			y -= h
+		}
+	}
 	CheckWindow() {
 		if (this.desktop)
 			return 1
