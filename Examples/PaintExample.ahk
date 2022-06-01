@@ -6,7 +6,7 @@
 setbatchlines,-1
 settitlematchmode,1
 
-#include ShinsImageScanClass.ahk
+#include ..\ShinsImageScanClass.ahk  ;remove ..\ if the class file is in the same directory
 scan := new ShinsImageScanClass("Untitled - Paint")
 scan.AutoUpdate := 0  ;only want to update the buffer once then perform many scans
 scan.UseControlClick := 1
