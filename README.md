@@ -9,10 +9,10 @@ ShinsImageScanClass is an AutoHotKey class designed for user freindliness and pe
 ## Functions
 ```ruby
 #Image....................Find an image; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
-Image(image, variance=0, ByRef returnX=0, ByRef returnY=0)
+Image(image, variance=0, ByRef returnX=0, ByRef returnY=0, centerResults=1)
 
 #ImageRegion..............Find an image in a specified region; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
-ImageRegion(image, x1, y1, w, h, variance=0, ByRef returnX=0, ByRef returnY=0)
+ImageRegion(image, x1, y1, w, h, variance=0, ByRef returnX=0, ByRef returnY=0, centerResults=1)
 
 #ImageCount...............Find the amount of images; Returns count of images
 ImageCount(image, variance=0)
