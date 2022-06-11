@@ -123,7 +123,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"uchar",centerResults,"int")
+		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int")
 		if (data > 0) {
 			returnX := data >> 16
 			returnY := data & 0xFFFF
@@ -168,7 +168,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 
@@ -257,7 +257,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
+		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int")
 		if (count > 0) {
 			array := []
 			loop % count {
@@ -312,7 +312,7 @@ class ShinsImageScanClass {
 		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
-		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"int")
 		if (data > 0) {
 			returnX := data >> 16
 			returnY := data & 0xFFFF
@@ -374,7 +374,7 @@ class ShinsImageScanClass {
 		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"uint",x1,"uint",y1,"uint",w,"uint",h,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
