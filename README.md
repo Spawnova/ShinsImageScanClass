@@ -73,3 +73,9 @@ SaveImage(name)
 
 * I've only tested on my end and can confirm it works for me using 32/64 bit AHK V1.1 on windows 10
 * if it doesn't work for you let me know, I may be able to help, or may not just depends.
+
+### Donations
+
+Thanks for stopping by! If you really enjoy my code and want to make a <ins>small</ins> donation, then here's a link! https://www.buymeacoffee.com/Spawnova
+
+**I will continue to provide code, and support released classes regardless of any monetary support**, and I'd rather none is given if you are not comfortably in a position to do so!
