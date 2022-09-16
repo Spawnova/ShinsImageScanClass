@@ -122,7 +122,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if the image was found; 0 otherwise
 	
-	Image(image,variance=0,ByRef returnX=0,ByRef returnY=0,centerResults=1,scanDir:=0) {
+	Image(image,variance=0,ByRef returnX=0,ByRef returnY=0,centerResults=0,scanDir:=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -153,7 +153,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if the image was found in the specified region; 0 otherwise
 	
-	ImageRegion(image,x1,y1,w,h,variance=0,ByRef returnX=0,ByRef returnY=0,centerResults=1,scanDir:=0) {
+	ImageRegion(image,x1,y1,w,h,variance=0,ByRef returnX=0,ByRef returnY=0,centerResults=0,scanDir:=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -223,7 +223,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 if an image was found close enough to the point; 0 otherwise
 	
-	ImageClosestToPoint(image,pointX,pointY,variance=0,byref returnX=0,byref returnY=0,centerResults=1,maxRadius=9999) {
+	ImageClosestToPoint(image,pointX,pointY,variance=0,byref returnX=0,byref returnY=0,centerResults=0,maxRadius=9999) {
 		if (!c := this.ImageArray(image,a,variance,centerResults))
 			return 0
 		min := maxRadius
@@ -255,7 +255,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 (and updates &array) if any number of images were found; 0 otherwise
 	
-	ImageArray(image,byref array,variance=0,centerResults=1) {
+	ImageArray(image,byref array,variance=0,centerResults=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -287,7 +287,7 @@ class ShinsImageScanClass {
 	;
 	;return				;				Returns 1 (and updates &array) if any number of images were found in the specified region; 0 otherwise
 	
-	ImageArrayRegion(image,byref array,x1,y1,w,h,variance=0,centerResults=1) {
+	ImageArrayRegion(image,byref array,x1,y1,w,h,variance=0,centerResults=0) {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
@@ -507,7 +507,9 @@ class ShinsImageScanClass {
 	Click(pointX,pointY,button:="left") {
 		if (this.UseControlClick) {
 			t := "ahk_id " this.hwnd
-			ControlClick, x%pointX% y%pointY%, %t%,,%button%,,NA
+			ControlClick, x%pointX% y%pointY%, %t%,,%button%,,NA D
+			sleep 50
+			ControlClick, x%pointX% y%pointY%, %t%,,%button%,,NA U
 		} else {
 			if (!WinActive("ahk_id " this.hwnd)) {
 				msgbox % "Attempting to click in target window but it is not active!`n`nIf you want to click inactive windows set 'UseControlClick' to true after initializing the class"
@@ -650,7 +652,7 @@ class ShinsImageScanClass {
 		DllCall("RtlFillMemory","Ptr",this.GetAddress(key),"Ptr",size,"uchar",fill)
 		return this.GetAddress(key)
 	}
-	_Delete() {
+	__Delete() {
 		DllCall("gdiplus\GdiplusShutdown", "Ptr*", this.gdiplusToken)
 	}
 	CacheImage(image) {
@@ -664,12 +666,8 @@ class ShinsImageScanClass {
 			msgbox % "Error finding resource image: '" image "' does not exist!"
 			return 0
 		}
-		if (!A_IsUnicode) {
-			VarSetCapacity(wchar, strlen(image)*2)
-			DllCall("kernel32\MultiByteToWideChar", "uint", 0, "uint", 0, "Ptr", &image, "int", -1, "Ptr", &wchar, "int", strlen(image))
-			DllCall("gdiplus\GdipCreateBitmapFromFile", "Ptr", &wchar, "Ptr*", bm)
-		} else
-			DllCall("gdiplus\GdipCreateBitmapFromFile", "Ptr", &image, "Ptr*", bm)
+
+		DllCall("gdiplus\GdipCreateBitmapFromFile", "Ptr", &image, "Ptr*", bm)
 		DllCall("gdiplus\GdipGetImageWidth", "Ptr", bm, "Uint*", w)
 		DllCall("gdiplus\GdipGetImageHeight", "Ptr", bm, "Uint*", h)
 		VarSetCapacity(r,16,0)
@@ -741,7 +739,6 @@ class ShinsImageScanClass {
 	}
 	AppendFunc(pos,str) {
 		p := this.mcode(str)
-		this.ppppppp := p
 		pp := (this.bits ? 24 : 16) + (pos * a_ptrSize)
 		numput(p,this.dataPtr,pp,"ptr")
 	}
