@@ -9,10 +9,10 @@ ShinsImageScanClass is an AutoHotKey class designed for user freindliness and pe
 ## Functions
 ```ruby
 #Image....................Find an image; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
-Image(image, variance=0, ByRef returnX=0, ByRef returnY=0, centerResults=1, scanDir:=0)
+Image(image, variance=0, ByRef returnX=0, ByRef returnY=0, centerResults=0, scanDir:=0)
 
 #ImageRegion..............Find an image in a specified region; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
-ImageRegion(image, x1, y1, w, h, variance=0, ByRef returnX=0, ByRef returnY=0, centerResults=1, scanDir:=0)
+ImageRegion(image, x1, y1, w, h, variance=0, ByRef returnX=0, ByRef returnY=0, centerResults=0, scanDir:=0)
 
 #ImageCount...............Find the amount of images; Returns count of images
 ImageCount(image, variance=0)
@@ -21,13 +21,13 @@ ImageCount(image, variance=0)
 ImageCountRegion(image, x1, y1, w, h, variance=0)
 
 #ImageClosestToPoint......Finds the closest image to a given position; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
-ImageClosestToPoint(image, pointX, pointY, variance=0, byref returnX=0, byref returnY=0, centerResults=1, maxRadius=9999)
+ImageClosestToPoint(image, pointX, pointY, variance=0, byref returnX=0, byref returnY=0, centerResults=0, maxRadius=9999)
 
 #ImageArray...............Finds all images; Returns 1 on success and updates the array variable to contain all image positions; 0 otherwise
-ImageArray(image, byref array, variance=0, centerResults=1)
+ImageArray(image, byref array, variance=0, centerResults=0)
 
 #ImageArrayRegion.........Finds all images in a specified region; Returns 1 on success and updates the array variable to contain all image positions; 0 otherwise
-ImageArrayRegion(image, byref array, x1, y1, w, h, variance=0, centerResults=1)
+ImageArrayRegion(image, byref array, x1, y1, w, h, variance=0, centerResults=0)
 
 #Pixel....................Find a pixel; Returns 1 on success and updates returnX and returnY variables; 0 otherwise
 Pixel(color, variance=0, ByRef returnX=0, ByRef returnY=0, scanDir:=0)
