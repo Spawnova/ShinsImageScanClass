@@ -463,12 +463,24 @@ class ShinsImageScanClass {
 	;
 	;notes				;				Saves the current pixel buffer to a png image
 	
-	SaveImage(name) {
+	SaveImage(name,x:=0,y:=0,w:=0,h:=0) {
 		if (!InStr(name,".png"))
 			name .= ".png"
-		if (this.autoUpdate)
-			this.Update()
-		DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", this.hbm, "Ptr", 0, "Ptr*", bm)
+		if (this.CheckWindow()) {
+			if (x!=0 or y!=0 or w!=0 or h!=0) {
+				dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
+				VarSetCapacity(_scan,8)
+				VarSetCapacity(bi,40,0)
+				NumPut(w,bi,4,"int"),NumPut(-h,bi,8,"int"),NumPut(40,bi,0,"uint"),NumPut(1,bi,12,"ushort"),NumPut(32,bi,14,"ushort")
+				hbm := DllCall("CreateDIBSection", "Ptr", dstDC, "Ptr", &bi, "uint", 0, "Ptr*", _scan, "Ptr", 0, "uint", 0, "Ptr")
+				DllCall("SelectObject", "Ptr", dstDC, "Ptr", hbm)
+				DllCall("gdi32\BitBlt", "Ptr", dstDC, "int", 0, "int", 0, "int", (w=0?this.width:w), "int", (h=0?this.height:h), "Ptr", this.srcDC, "int", x, "int", y, "uint", 0xCC0020) ;40
+				DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", hbm, "Ptr", 0, "Ptr*", bm)
+			} else {
+				DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020) ;40
+				DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", this.hbm, "Ptr", 0, "Ptr*", bm)
+			}
+		}
 		
 		;largely borrowed from tic function, encoder stuff is a pain
 		DllCall("gdiplus\GdipGetImageEncodersSize", "uint*", nCount, "uint*", nSize)
@@ -691,13 +703,14 @@ class ShinsImageScanClass {
 		return 1
 	}
 	Update() {
-		if (this.CheckWindow())
+		if (this.CheckWindow()) {
 			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020) ;40
+		}
 	}
 	GetRect(ByRef w, ByRef h) {
-		if (this.desktop) {  ;only gets primary screen for now, I may add support for virtual later
-			w := a_screenwidth
-			h := a_screenheight
+		if (this.desktop) {
+			w := dllcall("GetSystemMetrics","int",78)
+			h := dllcall("GetSystemMetrics","int",79)
 			return 1
 		}
 		if (this.UseClientArea) {
