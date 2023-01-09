@@ -41,6 +41,8 @@ class ShinsImageScanClass {
 		this.desktop := (title = 0 or title = "")
 		this.UseClientArea := UseClientArea
 		this.imageCache := []
+		this.offsetX := 0
+		this.offsetY := 0
 		
 		if (this.desktop)
 			coordmode,mouse,screen
@@ -157,11 +159,11 @@ class ShinsImageScanClass {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
-			this.Update()
-		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
+			this.Update(x1,y1,w,h)
+		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
 		if (data > 0) {
-			returnX := data >> 16
-			returnY := data & 0xFFFF
+			returnX := this.offsetX + (data >> 16)
+			returnY := this.offsetY + (data & 0xFFFF)
 			return 1
 		}
 		return 0
@@ -202,8 +204,8 @@ class ShinsImageScanClass {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
-			this.Update()
-		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"int")
+			this.Update(x1,y1,w,h)
+		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 
@@ -265,7 +267,7 @@ class ShinsImageScanClass {
 			array := []
 			loop % count {
 				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				array.push({x:v>>16,y:v&0xFFFF})
+				array.push({x:this.offsetX+(v>>16),y:this.offsety+(v&0xFFFF)})
 			}
 			return count
 		}
@@ -291,13 +293,13 @@ class ShinsImageScanClass {
 		if (!this.CacheImage(image))
 			return 0
 		if (this.AutoUpdate)
-			this.Update()
-		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int")
+			this.Update(x1,y1,w,h)
+		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int")
 		if (count > 0) {
 			array := []
 			loop % count {
 				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				array.push({x:v>>16,y:v&0xFFFF})
+				array.push({x:this.offsetx+(v>>16),y:this.offsetY+(v&0xFFFF)})
 			}
 			return count
 		}
@@ -348,11 +350,11 @@ class ShinsImageScanClass {
 	PixelRegion(color,x1,y1,w,h,variance=0,byref returnX=0,byref returnY=0,scanDir:=0) {
 		color &= 0xFFFFFF
 		if (this.AutoUpdate)
-			this.Update()
-		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"int")
+			this.Update(x1,y1,w,h)
+		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"int")
 		if (data > 0) {
-			returnX := data >> 16
-			returnY := data & 0xFFFF
+			returnX := this.offsetX + (data >> 16)
+			returnY := this.offsetY + (data & 0xFFFF)
 			return 1
 		}
 		return 0
@@ -410,8 +412,8 @@ class ShinsImageScanClass {
 	PixelCountRegion(color,x1,y1,w,h,variance=0) {
 		color &= 0xFFFFFF
 		if (this.AutoUpdate)
-			this.Update()
-		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"int",x1,"int",y1,"int",w,"int",h,"uchar",variance,"int")
+			this.Update(x1,y1,w,h)
+		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -614,6 +616,10 @@ class ShinsImageScanClass {
 	
 	
 	
+	
+	
+	
+	
 	;########################################## 
 	;  internal functions used by the class
 	;########################################## 
@@ -702,9 +708,11 @@ class ShinsImageScanClass {
 		this.ImageCache[image] := p
 		return 1
 	}
-	Update() {
+	Update(x:=0,y:=0,w:=0,h:=0) {
 		if (this.CheckWindow()) {
-			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020) ;40
+			this.offsetX := x
+			this.offsetY := y
+			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", (w?w:this.width), "int", (h?h:this.height), "Ptr", this.srcDC, "int", x, "int", y, "uint", 0xCC0020) ;40
 		}
 	}
 	GetRect(ByRef w, ByRef h) {
