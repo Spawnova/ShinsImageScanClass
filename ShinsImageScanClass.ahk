@@ -13,6 +13,8 @@
 ;
 ;Using desktop mode with windows aero enabled is much slower, try and use window/client mode where possible
 
+#Requires AutoHotkey v1.1.27+
+
 class ShinsImageScanClass {
 
 	;title				:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
@@ -674,6 +676,7 @@ class ShinsImageScanClass {
 		DllCall("gdiplus\GdiplusShutdown", "Ptr*", this.gdiplusToken)
 	}
 	CacheImage(image) {
+		local
 		if (this.imageCache.haskey(image))
 			return 1
 		if (image = "") {
@@ -759,11 +762,13 @@ class ShinsImageScanClass {
 		return result
 	}
 	AppendFunc(pos,str) {
+		local
 		p := this.mcode(str)
 		pp := (this.bits ? 24 : 16) + (pos * a_ptrSize)
 		numput(p,this.dataPtr,pp,"ptr")
 	}
 	Mcode(str) {
+		local
 		s := strsplit(str,"|")
 		if (s.length() != 2)
 			return
