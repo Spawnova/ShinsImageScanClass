@@ -446,17 +446,19 @@ class ShinsImageScanClass {
 	;
 	;pointX				:				X position
 	;pointY				:				Y position
+	;suppressWarning    :               Enable/Disable warning message when scanning outside the region
 	;
 	;return				;				Returns the pixel at the pointX,pointY location
 	
-	GetPixel(pointX,pointY) {
+	GetPixel(pointX,pointY,suppressWarning:=0) {
 		if (this.AutoUpdate)
 			this.Update()
 		if (pointX < 0 or pointY < 0 or pointX >= this.width or pointY >= this.height) {
-			msgbox % "Cannot get a pixel at position: " pointX "," pointY " as it lies outside of the source region!"
+			if (!suppressWarning)
+				msgbox % "Cannot get a pixel at position: " pointX "," pointY " as it lies outside of the source region!`n`nYou can disable this warning using the 3rd param of GetPixel()"
 			return 0
 		}
-		return NumGet(this.temp0,(pointX+pointY*this.width)*4,"uint")
+		return NumGet(this.temp0,(pointX+pointY*this.width)*4,"uint") & 0xFFFFFF
 	}
 	
 	
