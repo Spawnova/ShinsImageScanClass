@@ -88,13 +88,13 @@ class ShinsImageScanClass {
 		
 		this.scanTypes := []
 		this.scanTypes["LRTB"] := 0
-		this.scanTypes["RLTB"] := 1
-		this.scanTypes["LRBT"] := 2
+		this.scanTypes["RLTB"] := 2
+		this.scanTypes["LRBT"] := 1
 		this.scanTypes["RLBT"] := 3
-		this.scanTypes["TBRL"] := 4
-		this.scanTypes["TBLR"] := 5
-		this.scanTypes["BTRL"] := 6
-		this.scanTypes["BTLR"] := 7
+		this.scanTypes["TBRL"] := 7
+		this.scanTypes["TBLR"] := 6
+		this.scanTypes["BTRL"] := 5
+		this.scanTypes["BTLR"] := 4
 		this.scanTypes[0] := 0
 
 
