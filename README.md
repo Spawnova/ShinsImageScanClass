@@ -44,14 +44,29 @@ PixelCountRegion(color, x1, y1, w, h, variance=0)
 #PixelCountRadius.........Finds the count of pixels in a specified radius; Returns the count of pixels in that radius
 PixelCountRadius(color, pointX, pointY, radius, variance=0)
 
+#PixelArrayRegion.........Finds all matching pixels in a specified region; Returns the count of pixels in that region and updates the array
+PixelArrayRegion(color, byref array, x1, y1, w, h, variance=0, maxResults=1000) {
+
 #PixelPosition............Checks a pixel at a specified position; Returns 1 on color match; 0 otherwise
 PixelPosition(color, pointX, pointY, variance=0)
 
 #GetPixel.................Gets the pixel at a specified position; Returns pixel color on success; 0 otherwise
 GetPixel(x, y)
 
-#SaveImage................Save the current pixel buffer to a png image;
-SaveImage(name)
+#SaveImage................Save the current pixel buffer to a png image; Allows for saving specific areas as well.
+SaveImage(name, x:=0, y:=0, w:=0, h:=0)
+
+#Click....................Clicks at a position, supports background windows when possible
+Click(pointX, pointY, button:="left")
+
+#ClickDrag................Clicks and drags from two positions, supports background windows when possible
+ClickDrag(pointX1, pointY1, pointX2, pointY2, button:="left")
+
+#ClickRegion.............Clicks randomly inside a defined region
+ClickRegion(pointX, pointY, w, h, button:="left")
+
+#GetImageDimensions......Gets the width and height of an image used for searching
+GetImageDimensions(image, byref w, byref h)
 
 # Image() ImageRegion() Pixel() and PixelRegion() support 8 different scan direction:
 # LRTB = Left to Right, from the Top to the Bottom (Default)
