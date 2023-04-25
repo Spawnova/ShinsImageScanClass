@@ -32,7 +32,7 @@ class ShinsImageScanClass {
 		;#############################
 		;	Setup internal stuff
 		;#############################
-		this.LoadLib("C:\Users\Shin\source\repos\ImageScan\x64\Release\imagescan.dll","gdiplus")
+		this.LoadLib("gdiplus")
 		VarSetCapacity(gsi, 24, 0)
 		NumPut(1,gsi,0,"uint")
 		DllCall("gdiplus\GdiplusStartup", "Ptr*", token, "Ptr", &gsi, "Ptr", 0)
