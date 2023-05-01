@@ -164,11 +164,9 @@ class ShinsImageScanClass {
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
 		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
-		msgbox % data
 		if (data >= 0) {
 			returnX := this.offsetX + (data >> 16)
 			returnY := this.offsetY + (data & 0xFFFF)
-			msgbox k
 			return 1
 		}
 		return 0
