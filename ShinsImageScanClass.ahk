@@ -796,10 +796,15 @@ class ShinsImageScanClass {
 		this.ImageCache[image] := p
 		return 1
 	}
-	Update(x:=0,y:=0,w:=0,h:=0) {
+	Update(x:=0,y:=0,w:=0,h:=0,applyOffset:=1) {
 		if (this.CheckWindow()) {
-			this.offsetX := x
-			this.offsetY := y
+			if (applyOffset) {
+				this.offsetX := x
+				this.offsetY := y
+			} else {
+				this.offsetX := 0
+				this.offsetY := 0
+			}
 			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", (w?w:this.width), "int", (h?h:this.height), "Ptr", this.srcDC, "int", x, "int", y, "uint", 0xCC0020) ;40
 		}
 	}
