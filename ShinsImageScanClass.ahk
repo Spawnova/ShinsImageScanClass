@@ -134,8 +134,8 @@ class ShinsImageScanClass {
 			this.Update()
 		data := DllCall(this._ScanImage,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
-			returnX := data >> 16
-			returnY := data & 0xFFFF
+			returnX := this.offsetX + data >> 16
+			returnY := this.offsetY + data & 0xFFFF
 			return 1
 		}
 		return 0
@@ -244,8 +244,8 @@ class ShinsImageScanClass {
 		}
 		if (i = 0)
 			return 0
-		returnX := a[i].x
-		returnY := a[i].y
+		returnX := this.offsetX + a[i].x
+		returnY := this.offsetY + a[i].y
 		return 1
 	}
 	
@@ -327,8 +327,8 @@ class ShinsImageScanClass {
 			this.Update()
 		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
-			returnX := data >> 16
-			returnY := data & 0xFFFF
+			returnX := this.offsetX + data >> 16
+			returnY := this.offsetY + data & 0xFFFF
 			return 1
 		}
 		return 0
