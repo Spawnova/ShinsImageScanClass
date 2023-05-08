@@ -27,7 +27,8 @@ class ShinsImageScanClass {
 		
 		this.UseControlClick 	:= 0  	;when enabled attempts to use ControlClick to send clicks which works for background programs
 										;not all programs will respond to this however, so it may be necessary to use normal clicks which have to be foreground
-		
+										
+		this.WindowScale 		:= 1	;if windows has set the desktop scaling to anything other than 100% you can adjust with this variable, for instance if windows scaling is set to 150%, set this variable to 1.5
 		
 		;#############################
 		;	Setup internal stuff
@@ -134,8 +135,7 @@ class ShinsImageScanClass {
 			this.Update()
 		data := DllCall(this._ScanImage,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
-			returnX := this.offsetX + (data >> 16)
-			returnY := this.offsetY + (data & 0xFFFF)
+			MapCoords(data,returnX,returnY)
 			return 1
 		}
 		return 0
@@ -165,8 +165,7 @@ class ShinsImageScanClass {
 			this.Update(x1,y1,w,h)
 		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
-			returnX := this.offsetX + (data >> 16)
-			returnY := this.offsetY + (data & 0xFFFF)
+			MapCoords(data,returnX,returnY)
 			return 1
 		}
 		return 0
@@ -244,8 +243,8 @@ class ShinsImageScanClass {
 		}
 		if (i = 0)
 			return 0
-		returnX := this.offsetX + a[i].x
-		returnY := this.offsetY + a[i].y
+		returnX := this.offsetX + (a[i].x*this.WindowScale)
+		returnY := this.offsetY + (a[i].y*this.WindowScale)
 		return 1
 	}
 	
@@ -270,7 +269,8 @@ class ShinsImageScanClass {
 			array := []
 			loop % count {
 				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				array.push({x:this.offsetX+(v>>16),y:this.offsety+(v&0xFFFF)})
+				MapCoords(v,x,y)
+				array.push({x:x,y:y})
 			}
 			return count
 		}
@@ -302,7 +302,8 @@ class ShinsImageScanClass {
 			array := []
 			loop % count {
 				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				array.push({x:this.offsetx+(v>>16),y:this.offsetY+(v&0xFFFF)})
+				MapCoords(v,x,y)
+				array.push({x:x,y:y})
 			}
 			return count
 		}
@@ -327,8 +328,7 @@ class ShinsImageScanClass {
 			this.Update()
 		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
-			returnX := this.offsetX + (data >> 16)
-			returnY := this.offsetY + (data & 0xFFFF)
+			MapCoords(data,returnX,returnY)
 			return 1
 		}
 		return 0
@@ -356,8 +356,7 @@ class ShinsImageScanClass {
 			this.Update(x1,y1,w,h)
 		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
-			returnX := this.offsetX + (data >> 16)
-			returnY := this.offsetY + (data & 0xFFFF)
+			MapCoords(data,returnX,returnY)
 			return 1
 		}
 		return 0
@@ -464,7 +463,8 @@ class ShinsImageScanClass {
 			array := []
 			loop % count {
 				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				array.push({x:this.offsetx+(v>>16),y:this.offsetY+(v&0xFFFF)}) ;for large amounts of results, like 50k+ becomes a bottleneck to add to array
+				MapCoords(v,x,y)
+				array.push({x:x,y:y}) ;for large amounts of results, like 50k+ becomes a bottleneck to add to array
 			}
 			return count
 		}
@@ -646,7 +646,6 @@ class ShinsImageScanClass {
 	
 	
 	
-	
 	SetTargetImageFile(image) {
 		local
 		if (image = "") {
@@ -707,6 +706,7 @@ class ShinsImageScanClass {
 	
 	
 	
+	
 	;########################################## 
 	;  internal functions used by the class
 	;########################################## 
@@ -736,6 +736,10 @@ class ShinsImageScanClass {
 			this.CreateDIB()
 		}
 		return 1
+	}
+	MapCoords(d,byref x, byref y) {
+		x := this.offsetX + ((d>>16)*this.WindowScale)
+		y := this.offsetY + ((d&0xFFFF)*this.WindowScale)
 	}
 	CreateDIB() {
 		VarSetCapacity(_scan,8)
