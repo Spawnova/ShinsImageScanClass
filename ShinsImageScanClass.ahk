@@ -236,8 +236,8 @@ class ShinsImageScanClass {
 		min := maxRadius
 		i := 0
 		loop % c {
-			xd := a[a_index].x - pointX
-			yd := a[a_index].y - pointY
+			xd := (a[a_index].x/this.windowScale) - pointX
+			yd := (a[a_index].y/this.windowScale) - pointY
 			dist := sqrt(xd*xd + yd*yd)
 			if (dist < min) {
 				min := dist
@@ -246,8 +246,8 @@ class ShinsImageScanClass {
 		}
 		if (i = 0)
 			return 0
-		returnX := this.offsetX + (a[i].x*this.WindowScale)
-		returnY := this.offsetY + (a[i].y*this.WindowScale)
+		returnX := (this.offsetX + a[i].x) * this.WindowScale
+		returnY := (this.offsetY + a[i].y) * this.WindowScale
 		return 1
 	}
 	
