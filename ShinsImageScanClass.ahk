@@ -246,8 +246,8 @@ class ShinsImageScanClass {
 		}
 		if (i = 0)
 			return 0
-		returnX := (this.offsetX + a[i].x) * this.WindowScale
-		returnY := (this.offsetY + a[i].y) * this.WindowScale
+		returnX := a[i].x
+		returnY := a[i].y
 		return 1
 	}
 	
