@@ -271,8 +271,7 @@ class ShinsImageScanClass {
 		if (count > 0) {
 			array := []
 			loop % count {
-				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				this.MapCoords(v,x,y)
+				this.MapCoords(NumGet(this.tBufferPtr,(a_index-1)*4,"uint"),x,y)
 				array.push({x:x,y:y})
 			}
 			return count
@@ -304,8 +303,7 @@ class ShinsImageScanClass {
 		if (count > 0) {
 			array := []
 			loop % count {
-				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				this.MapCoords(v,x,y)
+				this.MapCoords(NumGet(this.tBufferPtr,(a_index-1)*4,"uint"),x,y)
 				array.push({x:x,y:y})
 			}
 			return count
@@ -326,10 +324,9 @@ class ShinsImageScanClass {
 	;return				;				Returns 1 if pixel was found; 0 otherwise
 	
 	Pixel(color,variance=0,ByRef returnX=0,ByRef returnY=0,scanDir:=0) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
-		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int",this.scanTypes[scanDir],"int")
+		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uchar",variance,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
 			this.MapCoords(data,returnX,returnY)
 			return 1
@@ -354,10 +351,9 @@ class ShinsImageScanClass {
 	;return				;				Returns 1 if a pixel inside the specified region was found; 0 otherwise
 	
 	PixelRegion(color,x1,y1,w,h,variance=0,byref returnX=0,byref returnY=0,scanDir:=0) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"int")
+		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"int")
 		if (data >= 0) {
 			this.MapCoords(data,returnX,returnY)
 			return 1
@@ -377,10 +373,9 @@ class ShinsImageScanClass {
 	;return				;				Returns 1 if the color matched at the specified position; 0 otherwise
 	
 	PixelPosition(color,pointX,pointY,variance=0) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color,"uint",pointX,"uint",pointY,"uint",variance,"int")
+		c := DllCall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uint",pointX,"uint",pointY,"uint",variance,"int")
 		return (c == 1 ? 1 : 0)
 	}
 	
@@ -394,10 +389,9 @@ class ShinsImageScanClass {
 	;return				;				Returns the amount of matching pixels; 0 otherwise
 	
 	PixelCount(color,variance=0) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -415,10 +409,9 @@ class ShinsImageScanClass {
 	;return				;				Returns the amount of matching pixels in the specified region; 0 otherwise
 	
 	PixelCountRegion(color,x1,y1,w,h,variance=0) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -436,10 +429,9 @@ class ShinsImageScanClass {
 	;return				;				Returns the amount of matching pixels in a specified radius; 0 otherwise
 	
 	PixelCountRadius(color,pointX,pointY,radius,variance=0) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelCountRadius,"Ptr",this.dataPtr,"Uint",color,"uint",pointX,"uint",pointY,"uint",radius,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCountRadius,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uint",pointX,"uint",pointY,"uint",radius,"uchar",variance,"int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -458,15 +450,13 @@ class ShinsImageScanClass {
 	;return				;				Returns the amount of matching pixels in the specified region; 0 otherwise
 	
 	PixelArrayRegion(color,byref array,x1,y1,w,h,variance=0,maxResults=1000) {
-		color &= 0xFFFFFF
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		count := DllCall(this._ScanPixelArrayRegion,"Ptr",this.dataPtr,"Uint",color,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uint",maxResults,"int")
+		count := DllCall(this._ScanPixelArrayRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uint",maxResults,"int")
 		if (count > 0) {
 			array := []
 			loop % count {
-				v := NumGet(this.tBufferPtr,(a_index-1)*4,"uint")
-				this.MapCoords(v,x,y)
+				this.MapCoords(NumGet(this.tBufferPtr,(a_index-1)*4,"uint"),x,y)
 				array.push({x:x,y:y}) ;for large amounts of results, like 50k+ becomes a bottleneck to add to array
 			}
 			return count
@@ -487,6 +477,7 @@ class ShinsImageScanClass {
 	GetPixel(pointX,pointY,suppressWarning:=0) {
 		if (this.AutoUpdate)
 			this.Update()
+		pointX<<=0,pointY<<=0
 		if (pointX < 0 or pointY < 0 or pointX >= this.width or pointY >= this.height) {
 			if (!suppressWarning)
 				msgbox % "Cannot get a pixel at position: " pointX "," pointY " as it lies outside of the source region!`n`nYou can disable this warning using the 3rd param of GetPixel()"
