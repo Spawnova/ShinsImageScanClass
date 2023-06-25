@@ -479,6 +479,7 @@ class ShinsImageScanClass {
 	GetPixel(pointX,pointY,suppressWarning:=0) {
 		if (this.AutoUpdate)
 			this.Update()
+		pointX<<=0,pointY<<=0
 		if (pointX < 0 or pointY < 0 or pointX >= this.width or pointY >= this.height) {
 			if (!suppressWarning)
 				msgbox "Cannot get a pixel at position: " pointX "," pointY " as it lies outside of the source region!`n`nYou can disable this warning using the 3rd param of GetPixel()"
