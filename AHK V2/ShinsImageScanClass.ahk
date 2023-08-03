@@ -233,7 +233,7 @@ class ShinsImageScanClass {
 	;return				;				Returns 1 if an image was found close enough to the point; 0 otherwise
 	
 	ImageClosestToPoint(image,pointX,pointY,variance:=0,&returnX:=0,&returnY:=0,centerResults:=0,maxRadius:=9999) {
-		if (!c := this.ImageArray(image,a,variance,centerResults))
+		if (!c := this.ImageArray(image,&a,variance,centerResults))
 			return 0
 		min := maxRadius
 		i := 0
