@@ -168,7 +168,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"int")
+		data := DllCall(this._ScanImageRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int",this.scanTypes[scanDir],"cdecl int")
 		if (data >= 0) {
 			this.MapCoords(data,&returnX,&returnY)
 			return 1
@@ -190,7 +190,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanImageCount,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"int")
+		c := DllCall(this._ScanImageCount,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"cdecl int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -212,7 +212,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int")
+		c := DllCall(this._ScanImageCountRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"cdecl int")
 		return (c > 0 ? c : 0)
 	}
 
@@ -269,7 +269,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update()
-		count := DllCall(this._ScanImageArray,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"int")
+		count := DllCall(this._ScanImageArray,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"uchar",variance,"uchar",centerResults,"cdecl int")
 		if (count > 0) {
 			array := []
 			loop count {
@@ -301,7 +301,7 @@ class ShinsImageScanClass {
 			return 0
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"int")
+		count := DllCall(this._ScanImageArrayRegion,"Ptr",this.dataPtr,"Ptr",this.imageCache[image],"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uchar",centerResults,"cdecl int")
 		if (count > 0) {
 			array := []
 			loop count {
@@ -328,7 +328,7 @@ class ShinsImageScanClass {
 	Pixel(color,variance:=0,&returnX:=0,&returnY:=0,scanDir:=0) {
 		if (this.AutoUpdate)
 			this.Update()
-		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uchar",variance,"int",this.scanTypes[scanDir],"int")
+		data := DllCall(this._ScanPixel,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uchar",variance,"int",this.scanTypes[scanDir],"cdecl int")
 		if (data >= 0) {
 			this.MapCoords(data,&returnX,&returnY)
 			return 1
@@ -355,7 +355,7 @@ class ShinsImageScanClass {
 	PixelRegion(color,x1,y1,w,h,variance:=0,&returnX:=0,&returnY:=0,scanDir:=0) {
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"int")
+		data := DllCall(this._ScanPixelRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int",this.scanTypes[scanDir],"cdecl int")
 		if (data >= 0) {
 			this.MapCoords(data,&returnX,&returnY)
 			return 1
@@ -377,7 +377,7 @@ class ShinsImageScanClass {
 	PixelPosition(color,pointX,pointY,variance:=0) {
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uint",pointX,"uint",pointY,"uint",variance,"int")
+		c := DllCall(this._ScanPixelPosition,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uint",pointX,"uint",pointY,"uint",variance,"cdecl int")
 		return (c == 1 ? 1 : 0)
 	}
 	
@@ -393,7 +393,7 @@ class ShinsImageScanClass {
 	PixelCount(color,variance:=0) {
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCount,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uchar",variance,"cdecl int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -413,7 +413,7 @@ class ShinsImageScanClass {
 	PixelCountRegion(color,x1,y1,w,h,variance:=0) {
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCountRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"cdecl int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -433,7 +433,7 @@ class ShinsImageScanClass {
 	PixelCountRadius(color,pointX,pointY,radius,variance:=0) {
 		if (this.AutoUpdate)
 			this.Update()
-		c := DllCall(this._ScanPixelCountRadius,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uint",pointX,"uint",pointY,"uint",radius,"uchar",variance,"int")
+		c := DllCall(this._ScanPixelCountRadius,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"uint",pointX,"uint",pointY,"uint",radius,"uchar",variance,"cdecl int")
 		return (c > 0 ? c : 0)
 	}
 	
@@ -454,7 +454,7 @@ class ShinsImageScanClass {
 	PixelArrayRegion(color,&array,x1,y1,w,h,variance:=0,maxResults:=1000) {
 		if (this.AutoUpdate)
 			this.Update(x1,y1,w,h)
-		count := DllCall(this._ScanPixelArrayRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uint",maxResults,"int")
+		count := DllCall(this._ScanPixelArrayRegion,"Ptr",this.dataPtr,"Uint",color&0xFFFFFF,"int",(this.autoUpdate?0:x1),"int",(this.autoUpdate?0:y1),"int",w,"int",h,"uchar",variance,"uint",maxResults,"cdecl int")
 		if (count > 0) {
 			array := []
 			loop count {
@@ -507,7 +507,7 @@ class ShinsImageScanClass {
 			bm := 0
 			if (x!=0 or y!=0 or w!=0 or h!=0) {
 				dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
-				bi := Buffer(40,0)
+				bi := Buffer(40,0), _scan := 0
 				NumPut("int",w,bi,4),NumPut("int",-h,bi,8),NumPut("uint",40,bi,0),NumPut("ushort",1,bi,12),NumPut("ushort",32,bi,14)
 				hbm := DllCall("CreateDIBSection", "Ptr", dstDC, "Ptr", bi.ptr, "uint", 0, "Ptr*", &_scan, "Ptr", 0, "uint", 0, "Ptr")
 				DllCall("SelectObject", "Ptr", dstDC, "Ptr", hbm)
@@ -556,9 +556,9 @@ class ShinsImageScanClass {
 	
 	Click(pointX,pointY,button:="left") {
 		if (this.UseControlClick) {
-			ControlClick "x" pointX " y" pointY,"ahk_id " this.hwnd, ,,button,,"NA D"
+			ControlClick("x" pointX " y" pointY,"ahk_id " this.hwnd,,button,,"NA D")
 			sleep 50
-			ControlClick "x" pointX " y" pointY,"ahk_id " this.hwnd, ,,button,,"NA U"
+			ControlClick("x" pointX " y" pointY,"ahk_id " this.hwnd,,button,,"NA U")
 		} else {
 			if (!WinActive("ahk_id " this.hwnd)) {
 				msgbox "Attempting to click in target window but it is not active!`n`nIf you want to click inactive windows set 'UseControlClick' to true after initializing the class"
@@ -586,9 +586,9 @@ class ShinsImageScanClass {
 	ClickDrag(pointX1,pointY1,pointX2,pointY2,button:="left") {
 		if (this.UseControlClick) {
 			t := "ahk_id " this.hwnd
-			ControlClick "x" pointX1 " y" pointY1,"ahk_id " this.hwnd, ,,button,,"NA D"
+			ControlClick("x" pointX1 " y" pointY1,"ahk_id " this.hwnd,,button,,"NA D")
 			sleep 10
-			ControlClick "x" pointX2 " y" pointY2,"ahk_id " this.hwnd, ,,button,,"NA U"
+			ControlClick("x" pointX2 " y" pointY2,"ahk_id " this.hwnd,,button,,"NA U")
 		} else {
 			if (!WinActive("ahk_id " this.hwnd)) {
 				msgbox "Attempting to click in target window but it is not active!`n`nIf you want to click inactive windows set 'UseControlClick' to true after initializing the class"
