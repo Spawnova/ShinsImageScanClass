@@ -17,11 +17,14 @@
 
 class ShinsImageScanClass {
 
-	;title				:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
-	;UseClientArea		:		If a window is specified it will use the client area (generally does not include title bar and menus)
-	;							Otherwise it will include the entirety of the window, which also includes extra space on the sides
-	;							and bottom used for mouse dragging
-	__New(title:=0, UseClientArea:=1) {
+	;title								:		ahk window title or other type of identifier, leave blank or set to 0 to scan the entire desktop
+	;UseClientArea_OrMainMonitor		:		UseClientArea = If a window is specified it will use the client area (generally does not include title bar and menus)
+	;											Otherwise it will include the entirety of the window, which also includes extra space on the sides
+	;											and bottom used for mouse dragging
+	;											OrMainMonitor = Only search the main monitor, if false it will search the entire virtual desktop space (multi-monitors)
+	
+	__New(title:=0, UseClientArea_OrMainMonitor:=1) {
+		global ShinsImageScanClass_Monitors
 	
 		this.AutoUpdate 		:= 1 	;when disabled, requires you to call Update() manually to refresh pixel data, useful when you need to scan multiple things on 1 frame
 		
@@ -42,17 +45,43 @@ class ShinsImageScanClass {
 		
 		this.bits := (a_ptrsize == 8) ;0=32,1=64
 		this.desktop := (title = 0 or title = "")
-		this.UseClientArea := UseClientArea
+		this.UseClientArea := UseClientArea_OrMainMonitor
+		this.VirtualDesktop := !UseClientArea_OrMainMonitor
+		this.DesktopRegion := {x1:0,y1:0,x2:a_screenwidth,y2:a_screenheight,w:a_screenwidth,h:a_screenheight}
 		this.imageCache := Map()
 		this.offsetX := 0
 		this.offsetY := 0
+		this.hwnd := 0
 		
-		if (this.desktop)
+		if (this.desktop) {
 			coordmode "mouse","screen"
-		else if (UseClientArea)
+			if (!UseClientArea_OrMainMonitor) {
+				ShinsImageScanClass_Monitors := []
+				cbk := CallbackCreate(ShinsImageScanClass_MonitorCallback,"F")
+				DllCall("EnumDisplayMonitors","Ptr",0,"Ptr",0,"ptr",cbk,"uint",0)
+				if (ShinsImageScanClass_Monitors.Length > 0) {
+					this.DesktopRegion := {x1:0,y1:0,x2:0,y2:0,w:0,h:0}
+					for k,v in ShinsImageScanClass_Monitors {
+						if (v.x1 < this.DesktopRegion.x1)
+							this.DesktopRegion.x1 := v.x1
+						if (v.y1 < this.DesktopRegion.y1)
+							this.DesktopRegion.y1 := v.y1
+						if (this.DesktopRegion.x2 < v.x2)
+							this.DesktopRegion.x2 := v.x2
+						if (this.DesktopRegion.y2 < v.y2)
+							this.DesktopRegion.y2 := v.y2
+					}
+					this.DesktopRegion.w := this.DesktopRegion.x2 - this.DesktopRegion.x1
+					this.DesktopRegion.h := this.DesktopRegion.y2 - this.DesktopRegion.y1
+				} else {
+					this.VirtualDesktop := 0
+				}
+			}
+		} else if (UseClientArea_OrMainMonitor) {
 			coordmode "mouse","client"
-		else
+		} else {
 			coordmode "mouse","window"
+		}
 			
 		this.tBufferPtr := tBufferPtr := Buffer(1048576,0)
 		this.dataPtr := dataPtr := Buffer(1024,0)
@@ -113,7 +142,7 @@ class ShinsImageScanClass {
 		
 		this.width := gw
 		this.height := gh
-		this.srcDC := DllCall("GetDCEx", "Ptr", (this.desktop ? 0 : this.hwnd),"Uint",0,"Uint",(this.UseClientArea ? 0 : 1))
+		this.srcDC := DllCall("GetDCEx", "Ptr", this.hwnd,"Uint",0,"Uint",(this.UseClientArea ? 0 : 1))
 		this.dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
 		NumPut("Ptr",this.tBufferPtr.ptr,this.dataPtr,(this.bits ? 8 : 4))
 		this.CreateDIB()
@@ -503,7 +532,7 @@ class ShinsImageScanClass {
 	SaveImage(name,x:=0,y:=0,w:=0,h:=0) {
 		if (!InStr(name,".png"))
 			name .= ".png"
-		if (this.CheckWindow()) {
+		if (this.desktop or this.CheckWindow()) {
 			bm := 0
 			if (x!=0 or y!=0 or w!=0 or h!=0) {
 				dstDC := DllCall("CreateCompatibleDC", "Ptr", 0)
@@ -514,32 +543,38 @@ class ShinsImageScanClass {
 				DllCall("gdi32\BitBlt", "Ptr", dstDC, "int", 0, "int", 0, "int", (w=0?this.width:w), "int", (h=0?this.height:h), "Ptr", this.srcDC, "int", x, "int", y, "uint", 0xCC0020) ;40
 				DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", hbm, "Ptr", 0, "Ptr*", &bm)
 			} else {
-				DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020) ;40
+				if (this.desktop and this.virtualDesktop)
+					DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", this.desktopRegion.x1, "int", this.desktopRegion.y1, "uint", 0xCC0020) ;40
+				else
+					DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", this.width, "int", this.height, "Ptr", this.srcDC, "int", 0, "int", 0, "uint", 0xCC0020) ;40
 				DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr", this.hbm, "Ptr", 0, "Ptr*", &bm)
 			}
-		}
 		
-		;largely borrowed from tic function, encoder stuff is a pain
-		nCount := nSize := 0
-		DllCall("gdiplus\GdipGetImageEncodersSize", "uint*", &nCount, "uint*", &nSize)
-		ci := Buffer(nSize)
-		DllCall("gdiplus\GdipGetImageEncoders", "uint", nCount, "uint", nSize, "Ptr", ci)
-		if !(nCount && nSize) {
-			msgbox "Problem getting encoder information"
-			return 0
-		}
-		Loop nCount {
-			sString := StrGet(NumGet(ci, (idx := (48+7*A_PtrSize)*(A_Index-1))+32+3*A_PtrSize,"ptr"),,"UTF-16") ;Thanks tic, this particularily confused me!
-			if (InStr(sString, "*.PNG")) {
-				pCodec := ci.ptr + idx
-				break
+		
+			;largely borrowed from tic function, encoder stuff is a pain
+			nCount := nSize := 0
+			DllCall("gdiplus\GdipGetImageEncodersSize", "uint*", &nCount, "uint*", &nSize)
+			ci := Buffer(nSize)
+			DllCall("gdiplus\GdipGetImageEncoders", "uint", nCount, "uint", nSize, "Ptr", ci)
+			if !(nCount && nSize) {
+				msgbox "Problem getting encoder information"
+				return 0
 			}
+			Loop nCount {
+				sString := StrGet(NumGet(ci, (idx := (48+7*A_PtrSize)*(A_Index-1))+32+3*A_PtrSize,"ptr"),,"UTF-16") ;Thanks tic, this particularily confused me!
+				if (InStr(sString, "*.PNG")) {
+					pCodec := ci.ptr + idx
+					break
+				}
+			}
+			if (!pCodec) {
+				msgbox "Problem finding png codec"
+				return 0
+			}
+			v := DllCall("gdiplus\GdipSaveImageToFile", "Ptr", bm, "Ptr", StrPtr(name), "Ptr", pCodec, "uint", 0)
+		} else {
+			msgbox "Unable to save image: " name "`n`nIs the window minimized?"
 		}
-		if (!pCodec) {
-			msgbox "Problem finding png codec"
-			return 0
-		}
-		v := DllCall("gdiplus\GdipSaveImageToFile", "Ptr", bm, "Ptr", StrPtr(name), "Ptr", pCodec, "uint", 0)
 	}
 	
 	
@@ -716,9 +751,7 @@ class ShinsImageScanClass {
 		}
 	}
 	CheckWindow() {
-		if (this.desktop)
-			return 1
-
+	
 		if (this.UseClientArea and !this.GetClientRect(&w,&h))
 			return 0
 		else if (!this.UseClientArea and !this.GetWindowRect(&w,&h))
@@ -790,21 +823,23 @@ class ShinsImageScanClass {
 		return 1
 	}
 	Update(x:=0,y:=0,w:=0,h:=0,applyOffset:=1) {
-		if (this.CheckWindow()) {
-			if (applyOffset) {
-				this.offsetX := x
-				this.offsetY := y
-			} else {
-				this.offsetX := 0
-				this.offsetY := 0
-			}
+		if (this.desktop) {
+			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", (!w||w>this.desktopRegion.w?this.desktopRegion.w:w), "int", (!h||h>this.desktopRegion.h?this.desktopRegion.h:h), "Ptr", this.srcDC, "int", this.desktopRegion.x1+x, "int", this.desktopRegion.y1+y, "uint", 0xCC0020) ;40
+		} else if (this.CheckWindow()) {
 			DllCall("gdi32\BitBlt", "Ptr", this.dstDC, "int", 0, "int", 0, "int", (!w||w>this.width?this.width:w), "int", (!h||h>this.height?this.height:h), "Ptr", this.srcDC, "int", x, "int", y, "uint", 0xCC0020) ;40
+		} else { 
+			return 0
+		}
+		if (applyOffset) {
+			this.offsetX := x, this.offsetY := y
+		} else {
+			this.offsetX := this.offsetY := 0
 		}
 	}
 	GetRect(&w, &h) {
 		if (this.desktop) {
-			w := dllcall("GetSystemMetrics","int",78)
-			h := dllcall("GetSystemMetrics","int",79)
+			w := this.desktopRegion.w
+			h := this.desktopRegion.h
 			return 1
 		}
 		if (this.UseClientArea) {
@@ -864,4 +899,16 @@ class ShinsImageScanClass {
 			if (!DllCall("GetModuleHandle", "str", v, "Ptr"))
 				DllCall("LoadLibrary", "Str", v) 
 	}
+}
+
+ShinsImageScanClass_MonitorCallback(a,b,c,d) {
+	global ShinsImageScanClass_Monitors
+	x1 := numget(c+0,0,"int")
+	y1 := numget(c+0,4,"int")
+	x2 := numget(c+0,8,"int")
+	y2 := numget(c+0,12,"int")
+	w := x2-x1
+	h := y1-y1
+	ShinsImageScanClass_Monitors.push({a:a,b:b,c:c,d:d,x1:x1,y1:y1,x2:x2,y2:y2,w:w,h:h})
+	return 1
 }
