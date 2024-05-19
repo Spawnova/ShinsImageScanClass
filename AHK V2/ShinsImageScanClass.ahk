@@ -52,6 +52,7 @@ class ShinsImageScanClass {
 		this.offsetX := 0
 		this.offsetY := 0
 		this.hwnd := 0
+		this.lastError := ""
 		
 		if (this.desktop) {
 			coordmode "mouse","screen"
@@ -844,35 +845,37 @@ class ShinsImageScanClass {
 		}
 		if (this.UseClientArea) {
 			if (!this.GetClientRect(&w,&h)) {
-				msgbox "Problem with Client rectangle dimensions, is window minimized?`n`nScanner will not function!"
+				msgbox "Problem with Client rectangle dimensions, is window minimized?`n`nScanner will not function!`n`n" this.lastError
 				return 0
 			}
 		} else {
 			if (!this.GetWindowRect(&w,&h)) {
-				msgbox "Problem with Window rectangle dimensions, is window minimized?`n`nScanner will not function!"
+				msgbox "Problem with Window rectangle dimensions, is window minimized?`n`nScanner will not function!`n`n" this.lastError
 				return 0
 			}
 		}
 		return 1
 	}
 	GetClientRect(&w, &h) {
-		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", this.tBufferPtr))
-			return 0
-		w := NumGet(this.tBufferPtr,8,"int")
-		h := NumGet(this.tBufferPtr,12,"int")
+		buff := Buffer(32,0)
+		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", buff)
+			return this.err(-1,"Call to GetClientRect failed for hwnd: " hwnd)
+		w := NumGet(buff,8,"int")
+		h := NumGet(buff,12,"int")
 		if (w <= 0 or h <= 0)
-			return 0
+			return this.err(-2,"GetClientRect returned invalid dimensions (" w "," h ") for hwnd: " hwnd)
 		return 1
 	}
 	GetWindowRect(&w, &h) {
-		if (!DllCall("GetWindowRect", "Ptr", this.hwnd, "Ptr", this.tBufferPtr))
-			return 0
-		x := NumGet(this.tBufferPtr,0,"int")
-		y := NumGet(this.tBufferPtr,4,"int")
-		w := NumGet(this.tBufferPtr,8,"int") - x
-		h := NumGet(this.tBufferPtr,12,"int") - y
+		buff := Buffer(32,0)
+		if (!DllCall("GetWindowRect", "Ptr", this.hwnd, "Ptr", buff))
+			return this.err(-1,"Call to GetWindowRect failed for hwnd: " hwnd)
+		x := NumGet(buff,0,"int")
+		y := NumGet(buff,4,"int")
+		w := NumGet(buff,8,"int") - x
+		h := NumGet(buff,12,"int") - y
 		if (w <= 0 or h <= 0)
-			return 0
+			return this.err(-2,"GetWindowRect returned invalid dimensions (" w "," h ") for hwnd: " hwnd)
 		return 1
 	}
 	AppendFunc(pos,str) {
@@ -898,6 +901,10 @@ class ShinsImageScanClass {
 		for k,v in lib
 			if (!DllCall("GetModuleHandle", "str", v, "Ptr"))
 				DllCall("LoadLibrary", "Str", v) 
+	}
+	Err(v,r) {
+		this.lastError := r
+		return v
 	}
 }
 
