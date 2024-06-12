@@ -861,23 +861,23 @@ class ShinsImageScanClass {
 	GetClientRect(byref w, byref h) {
 		varSetCapacity(buff,32)
 		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", &buff))
-			return this.err(-1,"Call to GetClientRect failed for hwnd: " hwnd)
+			return this.err(-1,"Call to GetClientRect failed for hwnd: " this.hwnd)
 		w := NumGet(buff,8,"int")
 		h := NumGet(buff,12,"int")
 		if (w <= 0 or h <= 0)
-			return this.err(-2,"GetClientRect returned invalid dimensions (" w "," h ") for hwnd: " hwnd)
+			return this.err(-2,"GetClientRect returned invalid dimensions (" w "," h ") for hwnd: " this.hwnd)
 		return 1
 	}
 	GetWindowRect(byref w, byref h) {
 		varSetCapacity(buff,32)
 		if (!DllCall("GetWindowRect", "Ptr", this.hwnd, "Ptr", &buff))
-			return this.err(-1,"Call to GetWindowRect failed for hwnd: " hwnd)
+			return this.err(-1,"Call to GetWindowRect failed for hwnd: " this.hwnd)
 		x := NumGet(buff,0,"int")
 		y := NumGet(buff,4,"int")
 		w := NumGet(buff,8,"int") - x
 		h := NumGet(buff,12,"int") - y
 		if (w <= 0 or h <= 0)
-			return this.err(-2,"GetWindowRect returned invalid dimensions (" w "," h ") for hwnd: " hwnd)
+			return this.err(-2,"GetWindowRect returned invalid dimensions (" w "," h ") for hwnd: " this.hwnd)
 		return 1
 	}
 	Random(min,max) {
