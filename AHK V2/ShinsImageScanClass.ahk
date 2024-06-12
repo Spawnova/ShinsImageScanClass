@@ -858,7 +858,7 @@ class ShinsImageScanClass {
 	}
 	GetClientRect(&w, &h) {
 		buff := Buffer(32,0)
-		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", buff)
+		if (!DllCall("GetClientRect", "Ptr", this.hwnd, "Ptr", buff))
 			return this.err(-1,"Call to GetClientRect failed for hwnd: " this.hwnd)
 		w := NumGet(buff,8,"int")
 		h := NumGet(buff,12,"int")
