@@ -650,7 +650,7 @@ class ShinsImageScanClass {
 	;notes				:				Clicks randomly within the specified region
 	
 	ClickRegion(pointX,pointY,w,h,button:="left") {
-		this.CheckRegion(pointX,pointY,w,h)
+		this.CheckRegion(&pointX,&pointY,&w,&h)
 		pointX += Random(w)
 		pointY += Random(h)
 		return this.Click(pointX,pointY,button)
