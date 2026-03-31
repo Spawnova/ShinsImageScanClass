@@ -1,10 +1,18 @@
 # ShinsImageScanClass
 
-ShinsImageScanClass is an AutoHotKey class designed for user freindliness and performance in mind, capable of searching for images and pixels extremely fast and also with background window support it's versatile and lightweight, with no additional dependancies. It also supports 32 and 64 bit, and now supports AutoHotkey V2 as well.
+ShinsImageScanClass is an AutoHotKey class designed for user friendliness and performance in mind, capable of searching for images and pixels extremely fast and also with background window support it's versatile and lightweight, with no additional dependancies. It also supports 32 and 64 bit, and now supports AutoHotkey V2 as well.
 
 # Youtube simple overview and examples
 
 [![Video](https://img.youtube.com/vi/wIdcF6KUHIE/default.jpg)](https://www.youtube.com/watch?v=wIdcF6KUHIE)
+
+## Installation
+
+This project doesn't have any binary depencencies you need to install. Simply add the .ahk file corresponding to the version of AutoHotKey you are using to a folder from which you can #include it from and use it like this:
+
+```ruby
+#include ShinsImageScanClass.ahk
+```
 
 ## Functions
 ```ruby
